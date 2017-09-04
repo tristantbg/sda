@@ -48,8 +48,8 @@
 	<?php endif ?>
 
 	<meta itemprop="description" content="<?= $site->description()->html() ?>">
-	<!-- <link rel="shortcut icon" href="<?php //url('assets/images/favicon.ico') ?>">
-	<link rel="icon" href="<?php //url('assets/images/favicon.ico') ?>" type="image/x-icon"> -->
+	<link rel="shortcut icon" href="<?= url('assets/images/favicon.ico') ?>">
+	<link rel="icon" href="<?= url('assets/images/favicon.ico') ?>" type="image/x-icon">
 
 	<?php 
 	echo css('assets/css/build/build.min.css');
