@@ -52,7 +52,7 @@ module.exports = function(grunt) {
           target: {
             files: {
               'assets/css/build/build.min.css': 
-              ['lib/normalize-css/normalize.css', 
+              ['node_modules/normalize-css/normalize.css', 
               'site/plugins/embed/assets/css/embed.css', 
               'node_modules/flickity/dist/flickity.min.css',
               'assets/css/app.min.css']

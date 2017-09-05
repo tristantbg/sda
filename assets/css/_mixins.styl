@@ -72,19 +72,9 @@ dead-center(position)
 	left: 50%
 	transform: translate(-50%,-50%)
 
-flexbox()
-	display -webkit-box
-	display -moz-box
-	display -ms-flexbox
-	display -webkit-flex
-	display flex
-
 vendor(prop, args)
 	-webkit-{prop} args
 	-moz-{prop} args
 	-ms-{prop} args
 	-o-{prop} args
 	{prop} args
-
-filter(args)
-	vendor(filter,args)
