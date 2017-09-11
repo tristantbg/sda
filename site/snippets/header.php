@@ -39,7 +39,7 @@
 	<meta property="og:url" content="<?= html($page->url()) ?>" />
 	<?php if($page->content()->name() == "project"): ?>
 		<?php if (!$page->featured()->empty()): ?>
-			<meta property="og:image" content="<?= resizeOnDemand($page->image($page->featured()), 1200) ?>"/>
+			<meta property="og:image" content="<?= $page->image($page->featured())->width(1200)->url() ?>"/>
 		<?php endif ?>
 	<?php else: ?>
 		<?php if(!$site->ogimage()->empty()): ?>
@@ -83,4 +83,10 @@
 	</div>
 </div>
 
-<div id="container">
+<header>
+	<div id="site-title">
+		<h1><?= $site->title()->html() ?></h1>
+	</div>
+</header>
+
+<div id="wrapper">
