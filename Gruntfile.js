@@ -10,12 +10,12 @@ module.exports = function(grunt) {
                 //'node_modules/lazysizes/plugins/optimumx/ls.optimumx.min.js', 
                 //'node_modules/lazysizes/plugins/unveilhooks/ls.unveilhooks.min.js', 
                 //'node_modules/viewport-units-buggyfill/viewport-units-buggyfill.js',
-                //'node_modules/smoothstate/jquery.smoothState.min.js'
+                'libraries/smoothstate-with-action/src/jquery.smoothState.js'
                 ],
                 dest: 'assets/js/plugins.concat.js'
             },
             js: {
-                src: ['assets/js/app.js'],
+                src: ['src/js/components/*.js', 'src/js/app.js'],
                 dest: 'assets/js/app.concat.js'
             },
         },
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
                     ],
                 },
                 files: {
-                    'assets/css/app.min.css': 'assets/css/app.styl'
+                    'assets/css/app.min.css': 'src/css/app.styl'
                 }
             }
         },
@@ -61,14 +61,14 @@ module.exports = function(grunt) {
         },
         watch: {
             js: {
-                files: ['lib/**/*.js', 'assets/js/**/!(app.min|app.concat).js'],
+                files: ['src/js/components/*.js', 'src/js/app.js'],
                 tasks: ['javascript'],
                 options: {
                     livereload: true,
                 }
             },
             css: {
-                files: ['assets/css/**/*.styl'],
+                files: ['src/css/**/*.styl'],
                 tasks: ['stylesheets'],
                 options: {
                     livereload: true,

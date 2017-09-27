@@ -83,10 +83,12 @@
 	</div>
 </div>
 
-<header>
-	<div id="site-title">
-		<h1><?= $site->title()->html() ?></h1>
-	</div>
-</header>
+<div id="main">
 
-<div id="wrapper">
+	<header>
+		<div id="site-title">
+			<h1><?= $site->title()->html() ?></h1>
+		</div>
+	</header>
+
+	<div id="container">
