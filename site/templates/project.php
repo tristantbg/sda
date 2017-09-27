@@ -4,6 +4,8 @@
 	
 	<div class="slider">
 
+	<div id="mouse-nav"></div>
+
 	<?php foreach ($images as $key => $image): ?>
 
 		<?php if($image = $image->toFile()): ?>

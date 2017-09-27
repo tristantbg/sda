@@ -4,6 +4,7 @@ var width = $(window).width(),
     isMobile = false,
     target,
     lastTarget = false,
+    $mouseNav,
     $root = '/';
 $(function() {
     var app = {
@@ -57,16 +58,16 @@ $(function() {
                 draggable: isMobile,
                 dragThreshold: 20
             });
-            // $mouseNav = $('#mouse-nav');
-            // app.mouseNav();
+            $mouseNav = $('#mouse-nav');
+            app.mouseNav();
             if ($slider.length > 0) {
                 $slider.flkty = $slider.data('flickity');
                 $slider.count = $slider.flkty.slides.length;
-                if ($slider.flkty) {
-                    // $slider.attr("data-media", $slider.flkty.selectedElement.getAttribute("data-media"));
+                if ($slider.flkty && $slider.count > 0) {
+                    $slider.attr("data-media", $slider.flkty.selectedElement.getAttribute("data-media"));
                     $slider.on('select.flickity', function() {
                         $('#slide-number').html(($slider.flkty.selectedIndex + 1) + '/' + $slider.count);
-                        // $slider.attr("data-media", $slider.flkty.selectedElement.getAttribute("data-media"));
+                        $slider.attr("data-media", $slider.flkty.selectedElement.getAttribute("data-media"));
                     });
                     $slider.on('staticClick.flickity', function(event, pointer, cellElement, cellIndex) {
                         if (!cellElement || !isMobile) {
@@ -121,8 +122,7 @@ $(function() {
                     }
                 }
                 $mouseNav.css({
-                    top: y - headerHeight - $(window).scrollTop(),
-                    left: x
+                    transform: "translate(" + x + "px, " + (y - $(window).scrollTop()) + "px) translateZ(0)"
                 });
             });
         },

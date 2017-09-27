@@ -1,6 +1,6 @@
 #page-content.project
 	.slider
-		height 100%
+		height 100vh
 		hideselect()
 		.flickity-slider
 			transform(none !important)
@@ -55,47 +55,47 @@
 				right 0
 			&[disabled]
 				display none
-		// #mouse-nav
-		// 	align()
-		// 	position absolute
-		// 	top -100%
-		// 	left -100%
-		// 	color $secondary
-		// 	z-index 300
-		// 	white-space nowrap
-		// 	cursor none
-		// 	pointer-events none
-		// 	display none
-		// 	&::before
-		// 		pointer-events none
-		// &[data-media="video"]:not(.nav-hover)
-		// 	#mouse-nav
-		// 		&::before
-		// 			content 'Play'
-		// 	&.pause
-		// 		#mouse-nav::before
-		// 			content 'Pause'
-		// 	&.loading
-		// 		#mouse-nav::before
-		// 			content 'Loading'
-		// &[data-media="video"]
-		// 	.flickity-prev-next-button
-		// 		width 15%
-		// 	.plyr__controls
-		// 		cursor auto
-		// 		+below($md)
-		// 			display none
-		// 	.plyr--stopped
-		// 		.plyr__controls
-		// 			opacity 0
-		// &[data-media="image"], &.nav-hover
-		// 	&.left
-		// 		#mouse-nav::before
-		// 			content 'Prev'
-		// 	&.right
-		// 		#mouse-nav::before
-		// 			content 'Next'
-		// &:hover
-		// 	#mouse-nav
-		// 		+above($md)
-		// 			display block
+		#mouse-nav
+			align()
+			position fixed
+			top 0
+			left 0
+			color $secondary
+			z-index 300
+			white-space nowrap
+			cursor none
+			pointer-events none
+			display none
+			&::before
+				pointer-events none
+		&[data-media="video"]:not(.nav-hover)
+			#mouse-nav
+				&::before
+					content 'Play'
+			&.pause
+				#mouse-nav::before
+					content 'Pause'
+			&.loading
+				#mouse-nav::before
+					content 'Loading'
+		&[data-media="video"]
+			.flickity-prev-next-button
+				width 15%
+			.plyr__controls
+				cursor auto
+				+below($md)
+					display none
+			.plyr--stopped
+				.plyr__controls
+					opacity 0
+		&[data-media="image"], &.nav-hover
+			&.left
+				#mouse-nav::before
+					content 'Prev'
+			&.right
+				#mouse-nav::before
+					content 'Next'
+		&:hover
+			#mouse-nav
+				+above($md)
+					display block
