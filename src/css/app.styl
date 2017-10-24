@@ -20,14 +20,18 @@ $kinetic = cubic-bezier(0.77, 0, 0.175, 1)
 // CSS Reset
 global-reset()
 
+.dev{outline:1px solid #912eff}
+.dev > * {outline:1px solid #5497ff}
+.dev > * > * {outline:1px solid #51feff}
+.dev > * > * > * {outline:1px solid #ff0000}
+.dev > * > * > * * {outline:1px solid #00ff00}
+
+@import 'components/_utils.styl'
+@import 'components/_animations.styl'
+@import 'plyr/scss/plyr.styl'
 @import 'components/_main.styl'
 @import 'components/_outdated.styl'
 @import 'components/_loader.styl'
-
-#main
-	span(1)
-
-#container
-	span(1)
-
+@import 'components/_header.styl'
+@import 'components/_pages.styl'
 @import 'components/_project-slider.styl'
