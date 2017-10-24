@@ -4,6 +4,7 @@ var width = $(window).width(),
     isMobile = false,
     target,
     lastTarget = false,
+    slider,
     $mouseNav,
     $root = '/';
 $(function() {
@@ -22,8 +23,8 @@ $(function() {
                 $(document).keyup(function(e) {
                     //esc
                     if (e.keyCode === 27) app.goBack();
-                    if ($slider && e.keyCode === 39) $slider.flickity('next');
-                    if ($slider && e.keyCode === 37) $slider.flickity('previous');
+                    if (slider && e.keyCode === 39) slider.next();
+                    if (slider && e.keyCode === 37) slider.previous();
                 });
                 $(window).load(function() {
                     $(".loader").hide();
@@ -44,86 +45,132 @@ $(function() {
         interact: function() {
             app.loadSlider();
         },
-        loadSlider: function(hasVideos) {
-            $slider = false;
-            $slider = $('.slider').flickity({
-                cellSelector: '.slide',
-                imagesLoaded: true,
-                lazyLoad: 2,
-                setGallerySize: false,
-                accessibility: false,
-                wrapAround: true,
-                prevNextButtons: !isMobile,
-                pageDots: false,
-                draggable: isMobile,
-                dragThreshold: 20
+        plyr: function(loop) {
+            players = plyr.setup('.js-player', {
+                loop: false,
+                controls: ['controls', 'progress'],
+                iconUrl: $root + "/assets/css/plyr/plyr.svg"
             });
+            for (var i = players.length - 1; i >= 0; i--) {
+                players[i].on('play', function(event) {
+                    slider.element.classList.remove('play')
+                    slider.element.classList.add('pause');
+                });
+                players[i].on('pause', function(event) {
+                    slider.element.classList.remove('pause')
+                    slider.element.classList.add('play');
+                });
+                players[i].on('waiting', function(event) {
+                    slider.element.classList.add('loading');
+                });
+                players[i].on('canplay', function(event) {
+                    slider.element.classList.remove('loading');
+                });
+                players[i].on('ready', function(event) {
+                    $(".plyr__controls").hover(function() {
+                        $mouseNav.css('visibility', 'hidden');
+                    }, function() {
+                        $mouseNav.css('visibility', 'visible');
+                    });
+                });
+            }
+        },
+        loadSlider: function() {
             $mouseNav = $('#mouse-nav');
-            app.mouseNav();
-            if ($slider.length > 0) {
-                $slider.flkty = $slider.data('flickity');
-                $slider.count = $slider.flkty.slides.length;
-                if ($slider.flkty && $slider.count > 0) {
-                    $slider.attr("data-media", $slider.flkty.selectedElement.getAttribute("data-media"));
-                    $slider.on('select.flickity', function() {
-                        $('#slide-number').html(($slider.flkty.selectedIndex + 1) + '/' + $slider.count);
-                        $slider.attr("data-media", $slider.flkty.selectedElement.getAttribute("data-media"));
-                    });
-                    $slider.on('staticClick.flickity', function(event, pointer, cellElement, cellIndex) {
-                        if (!cellElement || !isMobile) {
-                            return;
-                        } else {
-                            $slider.flickity('next');
-                        }
-                    });
-                    // For lazysizes
-                    // $slider.on('select.flickity', function() {
-                    // var adjCellElems = $slider.flickity('getAdjacentCellElements', 2);
-                    // $(adjCellElems).find('.lazyimg:not(".lazyloaded")').addClass('lazyload');
-                    // });
-                    if (hasVideos) {
-                        var vids = $(".slider video");
-                        $.each(vids, function() {
-                            this.controls = false;
-                        });
-                        app.plyr();
-                        if (vids.length > 0) {
-                            $slider.on('select.flickity', function() {
-                                $.each(vids, function() {
-                                    this.pause();
-                                });
-                                $slider.removeClass('play pause');
+            slider = document.querySelector('.slider');
+            if (slider) {
+                slider = new Flickity(slider, {
+                    cellSelector: '.slide',
+                    imagesLoaded: true,
+                    lazyLoad: 2,
+                    setGallerySize: false,
+                    accessibility: false,
+                    wrapAround: true,
+                    prevNextButtons: !isMobile,
+                    pageDots: false,
+                    draggable: isMobile,
+                    dragThreshold: 20
+                });
+                app.mouseNav();
+                var vids = document.querySelectorAll(".slider video");
+                if (vids.length > 0) {
+                    var hls = [];
+                    for (var i = vids.length - 1; i >= 0; i--) {
+                        vids[i].controls = false;
+                        if (!isMobile && vids[i].getAttribute("data-stream") && Hls.isSupported()) {
+                            hls[i] = new Hls({
+                                minAutoBitrate: 1700000
                             });
-                            if ($slider.flkty.selectedElement.getAttribute("data-media") == "video") {
-                                vids[0].play();
-                            }
-                        } else if ($slider.count < 2) {
-                            $mouseNav.hide();
-                            $slider.css('cursor', 'auto');
+                            hls[i].loadSource(vids[i].getAttribute("data-stream"));
+                            hls[i].attachMedia(vids[i]);
+                            vids[i].setAttribute('poster', '');
                         }
                     }
+                    app.plyr();
+                }
+                slider.slidesCount = slider.slides.length;
+                slider.element.setAttribute("data-media", slider.selectedElement.getAttribute("data-media"));
+                slider.on('select', function() {
+                    //$('#slide-number').html((slider.selectedIndex + 1) + '/' + slider.slidesCount);
+                    slider.element.setAttribute("data-media", slider.selectedElement.getAttribute("data-media"));
+                });
+                slider.on('staticClick', function(event, pointer, cellElement, cellIndex) {
+                    if (!cellElement || !isMobile) {
+                        return;
+                    } else {
+                        slider.next();
+                    }
+                });
+                if (vids.length > 0) {
+                    slider.on('select', function() {
+                        $.each(vids, function() {
+                            this.pause();
+                        });
+                        slider.element.classList.remove('play', 'pause');
+                    });
+                    if (slider.selectedElement.getAttribute("data-media") == "video") {
+                        if (typeof hls[0] !== "undefined") {
+                            hls[0].on(Hls.Events.MANIFEST_PARSED, function() {
+                                vids[0].play();
+                            });
+                        } else  {
+                            vids[0].play();
+                        }
+                    }
+                } else if (slider.slidesCount < 2) {
+                    $mouseNav.remove();
+                    slider.element.style.cursor = 'auto';
                 }
             }
         },
         mouseNav: function() {
-            $slider.mousemove(function(event) {
-                var x = event.pageX;
-                var y = event.pageY;
-                if (x < width / 2) {
-                    $slider.removeClass('right').addClass('left');
-                } else {
-                    $slider.removeClass('left').addClass('right');
-                }
-                if (this.getAttribute("data-media") === "video" && $slider.count > 1) {
-                    if (x < 0.15 * width || x > 0.85 * width) {
-                        $slider.addClass('nav-hover');
+            $(slider.element).mousemove(function(event) {
+                if (slider) {
+                    var x = event.pageX;
+                    var y = event.pageY;
+                    if (x < width / 2) {
+                        slider.element.classList.remove('right');
+                        slider.element.classList.add('left');
                     } else {
-                        $slider.removeClass('nav-hover');
+                        slider.element.classList.remove('left');
+                        slider.element.classList.add('right');
                     }
+                    if (slider.element.getAttribute("data-media") === "video" && slider.slidesCount > 1) {
+                        if (x < 0.15 * width || x > 0.85 * width) {
+                            slider.element.classList.add('nav-hover');
+                        } else {
+                            slider.element.classList.remove('nav-hover');
+                        }
+                    }
+                    $mouseNav.css({
+                        transform: "translate(" + x + "px, " + (y - $(window).scrollTop()) + "px) translateZ(0)"
+                    });
                 }
-                $mouseNav.css({
-                    transform: "translate(" + x + "px, " + (y - $(window).scrollTop()) + "px) translateZ(0)"
-                });
+            });
+            $('#project-description, #project-title, .close-button a').hover(function() {
+                $mouseNav.hide();
+            }, function() {
+                $mouseNav.show();
             });
         },
         goIndex: function() {},

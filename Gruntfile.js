@@ -14,7 +14,7 @@ module.exports = function(grunt) {
                 ],
                 dest: 'assets/js/plugins.concat.js'
             },
-            js: {
+            app: {
                 src: ['src/js/components/*.js', 'src/js/app.js'],
                 dest: 'assets/js/app.concat.js'
             },
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
                 src: 'assets/js/plugins.concat.js',
                 dest: 'assets/js/build/plugins.js'
             },
-            build: {
+            app: {
                 src: 'assets/js/app.concat.js',
                 dest: 'assets/js/build/app.min.js',
                 options: {
@@ -62,7 +62,7 @@ module.exports = function(grunt) {
         watch: {
             js: {
                 files: ['src/js/components/*.js', 'src/js/app.js'],
-                tasks: ['javascript'],
+                tasks: ['concat:app', 'uglify:app'],
                 options: {
                     livereload: true,
                 }

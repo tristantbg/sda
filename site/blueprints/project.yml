@@ -50,4 +50,4 @@ fields:
     type: textarea
   medias: 
     label: Images
-    type: gallery
+    type: images
