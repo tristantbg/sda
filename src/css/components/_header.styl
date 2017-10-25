@@ -1,0 +1,99 @@
+header
+	position fixed
+	top 0
+	left 0
+	display inline-flex
+	width 100%
+	justify-content space-between
+	align-items center
+	background $accent
+	z-index 100
+
+#menu-burger
+	width 3em
+	height 3em
+	background $secondary
+	padding 0.8rem
+	cursor pointer
+	svg
+		fill $accent
+	&.open
+		background $accent
+		svg
+			fill $secondary
+
+#site-title
+	flex-grow 1
+	text-align center
+	h1
+		margin-top 0.1em
+
+#nav-language-placeholder
+	width 3em
+	height 3em
+	background $secondary
+
+nav.languages
+	position fixed
+	top 0
+	right 0
+	width 3em
+	height 3em
+	z-index 10000000
+	ul
+		display inline-flex
+		flex-direction column
+	li
+		display none
+		order 2
+		width 3em
+		height 3em
+		background $secondary
+		color $accent
+		text-transform uppercase
+		text-align center
+		&.active
+			order 1
+			display block
+	a
+		display block
+		width 100%
+		height 100%
+		display flex
+		align-items center
+		justify-content center
+	&:hover
+		li
+			display block
+			&:hover
+				background $accent
+				color $secondary
+
+nav.categories
+	position fixed
+	top 4.5rem
+	left 0
+	min-width 50%
+	height calc(100% - 4.5rem)
+	z-index 10000000
+	&:not(.open)
+		display none
+	ul
+		width 100%
+		height 100%
+		display inline-flex
+		flex-direction column
+	li
+		flex-grow 1
+		width 100%
+		text-transform uppercase
+		text-align center
+		display flex
+		justify-content center
+		align-items center
+		&.rounded
+			border-radius 1.9em
+	li.more
+		flex-grow 0
+	a
+		height 100%

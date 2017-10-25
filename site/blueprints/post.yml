@@ -1,0 +1,55 @@
+title: Post
+files: true
+pages: false
+icon: user
+files:
+  fields:
+    tags:
+      label: Tags
+      type: tags
+      separator: ,
+fields:
+  previewfiles:
+    type: previewfiles
+  prevnext: prevnext
+  title:
+    label: Title
+    type:  text
+    width: 1/2
+  date:
+    label: Post date
+    type: datetime
+    date:
+      format: DD-MM-YYYY
+    default:
+      date: now
+      time: now
+    width: 1/2
+  # category:
+  #   label: Category
+  #   type: quickselect
+  #   required: true
+  #   options: field
+  #   field:
+  #     page: ../
+  #     name: categories
+  #     separator: ,
+  #   width: 1/2
+  quote:
+    label: Quote
+    type: text
+    width: 2/4
+  featured:
+    label: Featured image
+    type: image
+    width: 1/4
+  cover:
+    label: Post cover
+    type: image
+    width: 1/4
+  text:
+    label: Description
+    type: textarea
+  # medias: 
+  #   label: Images
+  #   type: images

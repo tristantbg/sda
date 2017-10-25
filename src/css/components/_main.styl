@@ -1,25 +1,57 @@
-//webfont('Franklin Gothic', 'franklingothic', true, 'normal')
+webfont('ApaxMedium', 'ApaxMedium')
+webfont('GenathBold', 'GenathBold')
+webfont('GenathRegular', 'GenathRegular')
 
 body,html
 	width 100%
 	-webkit-text-size-adjust 100%
-	background $primary
+	background $accent
 
 html
 	font-size 62.5%
+	+above($xl + 1)
+		font-size 0.65vw
 
 body
-	font-family Helvetica Neue, Arial, sans-serif
-	font-size 1rem
+	font-family 'ApaxMedium', Helvetica Neue, Arial, sans-serif
+	font-size 1.5rem
 	text-rendering optimizeLegibility
 	font-smoothing()
 
+#site-title, nav.categories li:not(.more)
+	font-size 3.4rem
+	text-transform uppercase
+	white-space nowrap
+
+.serif
+	font-family 'GenathRegular'
+	&.bold
+		font-family 'GenathBold'
+		letter-spacing -0.02em
+		line-height 0.9
+
+.news
+	font-family 'ApaxMedium'
+	line-height 0.95
+	.serif
+		font-family 'ApaxMedium'
+		line-height 0.95
+
 p
 	margin-bottom 1em
-	line-height 100%
+	line-height 1.2
 
 p:last-child
 	margin-bottom 0
+
+#project-text p
+	font-size 1.8rem
+
+h1.title
+	text-transform uppercase
+	font-size 5.5rem
+	letter-spacing -0.02em
+	margin 1rem 0
 
 ::selection
 	background $secondary
@@ -49,8 +81,11 @@ a, a:hover, a:visited, a:focus
 	text-decoration none
 	cursor pointer
 
+img
+	display block
+
 .lazy, .plyr
-	transition opacity 300ms ease
+	transition opacity 100ms ease
 	opacity 0
 
 .lazy.lazyloaded, .lazy.flickity-lazyloaded, .plyr.plyr--ready
@@ -61,6 +96,14 @@ a, a:hover, a:visited, a:focus
 
 #container
 	span(1)
+	background $primary
+	margin-top 4.5rem
+
+#page-content
+	transition opacity 300ms ease
+	min-height calc(100vh - 4.5rem)
+	span(1)
+	background $primary
 
 body.is-loading
 	#page-content

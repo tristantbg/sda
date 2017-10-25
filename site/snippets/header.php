@@ -76,19 +76,56 @@
 </div>
 
 <div class="loader">
-	<div class="spinner">
-		<svg class="circular" viewBox="25 25 50 50">
-		<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="1" stroke-miterlimit="10"></circle>
-		</svg>
+	<div class="button black rounded">
+		<?= l::get('hi') ?>
 	</div>
 </div>
 
 <div id="main">
 
 	<header>
-		<div id="site-title">
-			<h1><?= $site->title()->html() ?></h1>
+		<div id="menu-burger">
+			<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 31 30" enable-background="new 0 0 31 30" xml:space="preserve">
+			<g>
+				<rect x="-0.1" y="0" width="31.1" height="4.2"/>
+				<rect x="-0.1" y="12.9" width="31.1" height="4.2"/>
+				<rect x="-0.1" y="25.8" width="31.1" height="4.2"/>
+			</g>
+			</svg>
 		</div>
+
+		<div id="site-title">
+			<a href="<?= $site->language()->url() ?>" data-target><h1><?= $site->title()->html() ?></h1></a>
+		</div>
+
+		<div id="nav-language-placeholder"></div>
+
 	</header>
+	
+	<nav class="languages" role="navigation">
+	  <ul>
+	    <?php foreach($site->languages() as $language): ?>
+	    <li<?php e($site->language() == $language, ' class="active"') ?>>
+	      <a href="<?php echo $page->url($language->code()) ?>">
+	        <?php echo html($language->code()) ?>
+	      </a>
+	    </li>
+	    <?php endforeach ?>
+	  </ul>
+	</nav>
+
+	<nav class="categories" role="navigation">
+	  <ul>
+	    <?php foreach($site->homePage()->children()->visible() as $cat): ?>
+	    <li class="button rounded">
+	      <a href="<?php echo $cat->url() ?>" data-target>
+	        <?php echo html($cat->title()) ?>
+	      </a>
+	    </li>
+	    <?php endforeach ?>
+	    <li class="more"><span class="more button black">More</span></li>
+	  </ul>
+	</nav>
 
 	<div id="container">

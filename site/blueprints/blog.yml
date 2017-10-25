@@ -1,0 +1,14 @@
+title: Blog
+files: false
+pages:
+  template:
+    - category
+deletable: false
+fields:
+  title:
+    label: Title
+    type:  text
+  # categories:
+  #   label: Categories
+  #   type: taglist
+  #   placeholder: Add a category

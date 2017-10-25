@@ -27,7 +27,9 @@ $(function() {
                     if (slider && e.keyCode === 37) slider.previous();
                 });
                 $(window).load(function() {
-                    $(".loader").hide();
+                    $(".loader").click(function(event) {
+                        $(this).hide();
+                    });
                 });
             });
         },
@@ -44,6 +46,46 @@ $(function() {
         },
         interact: function() {
             app.loadSlider();
+            app.imagesScroll();
+            $("#menu-burger").click(function(event) {
+              $(this).toggleClass('open');
+              $("nav.categories").toggleClass('open');
+            });
+        },
+        imagesScroll: function() {
+            var head = 45 + 34;
+            var $cover = $(".post-cover");
+            function checkTagPosition() {
+                currentScroll = $(window).scrollTop();
+                $cover.hide();
+                $('figcaption[data-scroll]').each(function(index, el) {
+                    $el = $(el);
+                    calc = currentScroll + head - $el.offset().top;
+                    console.log(index, calc);
+                    if (calc < 0) {
+                        $('img[data-scroll="' + $el.data('scroll') + '"]').prev('img').show();
+                    } else {
+                        $('img[data-scroll="' + $el.data('scroll') + '"]').prev('img').hide();
+                    }
+                });
+            }
+            $(window).unbind('scroll');
+            requestId = null;
+            if (typeof document.getElementById("post-visuals") !== "undefined") {
+                $postVisuals = $("#post-visuals");
+                $cover.click(function(event) {
+                $(this).hide();
+            });
+                $('figure[data-scroll]').each(function(index, el) {
+                    id = el.getAttribute("data-scroll");
+                    img = $(el).find("img").css('z-index', 500 - index).attr('data-scroll', id);
+                    $postVisuals.append(img);
+                });
+                requestId = null;
+                $(window).scroll(function(event) {
+                    requestId = window.requestAnimationFrame(checkTagPosition);
+                });
+            }
         },
         plyr: function(loop) {
             players = plyr.setup('.js-player', {
@@ -186,13 +228,15 @@ $(function() {
                     debug: true,
                     scroll: false,
                     anchors: '[data-target]',
-                    loadingClass: 'is-loading',
+                    loadingClass: false,
                     prefetch: true,
                     cacheLength: 4,
                     onAction: function($currentTarget, $container) {
                         lastTarget = target;
                         target = $currentTarget.data('target');
                         if (target === "back") app.goBack();
+                        $("#menu-burger").removeClass('open');
+              $("nav.categories").removeClass('open');
                         // console.log(lastTarget);
                     },
                     onBefore: function(request, $container) {
@@ -200,13 +244,13 @@ $(function() {
                         // console.log(popstate);
                     },
                     onStart: {
-                        duration: 0, // Duration of our animation
+                        duration: 300, // Duration of our animation
                         render: function($container) {
                             $body.addClass('is-loading');
                         }
                     },
                     onReady: {
-                        duration: 0,
+                        duration: 300,
                         render: function($container, $newContent) {
                             // Inject the new content
                             $(window).scrollTop(0);
@@ -219,7 +263,7 @@ $(function() {
                             $body.removeClass('is-loading');
                             // Clear cache for random content
                             // smoothState.clear();
-                        }, 200);
+                        }, 300);
                     }
                 },
                 smoothState = $(container).smoothState(options).data('smoothState');

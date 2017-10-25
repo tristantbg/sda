@@ -1,0 +1,28 @@
+title: Category
+files: false
+pages:
+  sort: date
+  template:
+    - post
+    - news
+deletable: false
+fields:
+  title:
+    label: Title
+    type:  text
+  sortable:
+    label: Sortable
+    type:  sortable
+
+    sortable: false
+
+    layout:  base
+    variant: null
+
+    limit: false
+
+    parent: null
+    prefix: null
+
+    options:
+      limit: false
