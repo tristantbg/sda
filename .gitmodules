@@ -22,9 +22,6 @@
 [submodule "site/plugins/typography"]
 	path = site/plugins/typography
 	url = https://github.com/fabianmichael/kirby-typography.git
-[submodule "site/fields/taglist"]
-	path = site/fields/taglist
-	url = https://github.com/tristantbg/kirby-list-field.git
 [submodule "site/plugins/quickselect"]
 	path = site/plugins/quickselect
 	url = https://github.com/medienbaecker/kirby-quickselect.git
