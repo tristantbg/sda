@@ -100,16 +100,16 @@ kirbytext::$tags['image'] = array(
       //   }
       // }
       foreach ($file->themes()->split(',') as $key => $tag) {
-        $tags .= "<a class='button rounded' href='".site()->language()->url().'/medias/tag:'.urlencode($tag)."' data-target>".$tag."</a>";
+        $tags .= "<a class='button rounded' href='".site()->language()->url().'/medias/themes:'.urlencode($tag)."' data-target>".$tag."</a>";
       }
       foreach ($file->technics()->split(',') as $key => $tag) {
-        $tags .= "<a class='button rounded' href='".site()->language()->url().'/medias/tag:'.urlencode($tag)."' data-target>".$tag."</a>";
+        $tags .= "<a class='button rounded' href='".site()->language()->url().'/medias/technics:'.urlencode($tag)."' data-target>".$tag."</a>";
       }
       foreach ($file->materials()->split(',') as $key => $tag) {
-        $tags .= "<a class='button rounded' href='".site()->language()->url().'/medias/tag:'.urlencode($tag)."' data-target>".$tag."</a>";
+        $tags .= "<a class='button rounded' href='".site()->language()->url().'/medias/materials:'.urlencode($tag)."' data-target>".$tag."</a>";
       }
       foreach ($file->colors()->split(',') as $key => $tag) {
-        $tags .= "<a class='button rounded' href='".site()->language()->url().'/medias/tag:'.urlencode($tag)."' data-target>".$tag."</a>";
+        $tags .= "<a class='button rounded' href='".site()->language()->url().'/medias/colors:'.urlencode($tag)."' data-target>".$tag."</a>";
       }
       if($tags != '') {
         // $figure->append('<figcaption data-scroll="'.$file->name().'"><span class="button rounded">' . html($tags) . '</span></figcaption>');
