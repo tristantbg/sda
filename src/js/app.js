@@ -30,7 +30,7 @@ $(function() {
                     $(".loader").click(function(event) {
                         $(this).addClass('animate');
                         setTimeout(function() {
-                          $(".loader").remove();
+                            $(".loader").remove();
                         }, 2000);
                     });
                 });
@@ -52,17 +52,26 @@ $(function() {
             app.imagesScroll();
             app.searchBar();
             $("#menu-burger").click(function(event) {
-                    if ($(this).hasClass('open')) {
-                        $(this).removeClass('open');
-                        $("nav.categories").removeClass('open');
-                    } else {
-                        $(this).addClass('open');
-                        $("nav.categories").addClass('open');
-                    }
-                });
+                if ($(this).hasClass('open')) {
+                    $(this).removeClass('open');
+                    $("nav.categories").removeClass('open');
+                } else {
+                    $(this).addClass('open');
+                    $("nav.categories").addClass('open');
+                }
+            });
+            $("[event-target='additional-menu']").click(function(event) {
+                if ($("nav.categories").hasClass('more')) {
+                    $("nav.categories, #additional-menu").removeClass('more');
+                    $body.css('overflow','auto');
+                } else {
+                    $("nav.categories, #additional-menu").addClass('more');
+                    $body.css('overflow','hidden');
+                }
+            });
         },
         searchBar: function() {
-            var $form = $('#search');
+            var $form = $('#search:not(.no-ajax)');
             if ($form.length > 0) {
                 var searchUrl = $form.attr('action');
                 $form.keydown(function(event) {
@@ -72,9 +81,7 @@ $(function() {
                     }
                 });
                 $form.find('input').keyup(debounce(function(event) {
-                    doSearch(searchUrl, $(this).val(), "#medias", function() {
-                       
-                    });
+                    doSearch(searchUrl, $(this).val(), "#medias", function() {});
                 }, 400));
             }
         },
@@ -264,6 +271,8 @@ $(function() {
                         if (target === "back") app.goBack();
                         $("#menu-burger").removeClass('open');
                         $("nav.categories").removeClass('open');
+                        $("nav.categories, #additional-menu").removeClass('more');
+                        $body.css('overflow','auto');
                         // console.log(lastTarget);
                     },
                     onBefore: function(request, $container) {

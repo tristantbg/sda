@@ -124,10 +124,19 @@
 	      </a>
 	    </li>
 	    <?php endforeach ?>
-	    <li class="more"><span class="more button black"><a href="<?= page('search')->url() ?>" data-target>More</a></span></li>
+	    <li class="more button black" event-target="additional-menu"><span></span></li>
 	  </ul>
 	</nav>
-
-	<?php //snippet('search') ?>
+	
+	<div id="additional-menu">
+		<form id="search" class="no-ajax" action="<?= page("search")->url() ?>">
+		<input type="search" placeholder="search" name="q" value="<?php if(isset($query)) echo esc($query) ?>" autocomplete="off" />
+		<!-- <input type="submit" value="Search"> -->
+		</form>
+		<div id="close">
+			<a event-target="additional-menu">X</a>
+		</div>
+		<?php snippet('search') ?>
+	</div>
 
 	<div id="container">

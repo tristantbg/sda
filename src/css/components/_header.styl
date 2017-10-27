@@ -84,6 +84,8 @@ nav.categories
 		height 100%
 		display inline-flex
 		flex-direction column
+		justify-content center
+		align-items center
 	li
 		flex-grow 1
 		width 100%
@@ -94,8 +96,44 @@ nav.categories
 		align-items center
 		// margin-bottom 1px
 		&.rounded
-			border-radius 1.9em
+			border-radius 20em
 	li.more
 		flex-grow 0
+		width 3rem
 	a
 		height 100%
+	[event-target="additional-menu"]
+		span::after
+			content 'More'
+	&.more
+		min-width 33.33333%
+		li:not(.more)
+			font-size 3rem
+			background $secondary
+			color $accent
+		li.more
+			height 20%
+			font-size 8vh
+			min-width 0
+			width 32vh
+			background $accent
+			color $secondary
+		[event-target="additional-menu"]
+			span::after
+				content 'Less'
+
+#additional-menu
+	position fixed
+	z-index 100000000
+	width 66.666666%
+	top 4.5rem
+	left 33.333333%
+	display none
+	.scroller
+			& > div
+				height calc(100vh - 11.8rem)
+				overflow-y scroll
+				&::-webkit-scrollbar
+					display none
+	&.more
+		display block
