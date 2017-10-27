@@ -2,11 +2,11 @@
 
 <div id="page-content" class="medias">
 
-	<?php if (param("tag")): ?>
+	<?php if (param()): ?>
 	<div class="row center">
-		<span class="button rounded">
-			<?= param("tag") ?>
-		</span>
+			<?php foreach (param() as $key => $tag): ?>
+			<span class="button rounded"><?= $tag ?></span>
+			<?php endforeach ?>
 	</div>
 	<?php endif ?>
 
