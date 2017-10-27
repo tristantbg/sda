@@ -1,10 +1,10 @@
 <?php snippet('header') ?>
 
 <div id="page-content" class="blog">
-
+	<?php $idx = 1 ?>
 	<?php foreach ($posts as $key => $post): ?>
 
-		<div class="post-item <?= $post->intendedTemplate() ?>">
+		<div class="post-item <?= $post->intendedTemplate() ?><?php e($idx > 3, ' small') ?>">
 
 			<a href="<?= $post->url() ?>" class="link-overlay" data-target="post">
 				<div class="item-title button rounded">
@@ -28,8 +28,14 @@
 			</div>
 			
 		</div>
-
+		<?php if ($idx == 3): ?>
+			<div class="row">			
+		<?php endif ?>
+		<?php $idx++ ?>
 	<?php endforeach ?>
+		<?php if ($idx > 4): ?>
+			</div>
+		<?php endif ?>
 
 </div>
 

@@ -7,7 +7,6 @@
 			span(1/2)
 			height 100%
 		.item-visual
-			background $accent
 			img
 				object-fit cover
 		.item-text
@@ -18,6 +17,9 @@
 			text-align center
 			padding 3rem
 			background $primary
+			&.serif
+				font-size 9.5vw
+				line-height 0.8
 		.link-overlay
 			display flex
 			justify-content center
@@ -27,24 +29,66 @@
 			position absolute
 			top 0
 			left 0
-		&:nth-child(n+4)
+		&.small
 			span(1/2)
 			height 25vw
 			.item-text
 				font-size 4.25vw
-		&:nth-child(even)
+		&.small:nth-child(4n+1), &.small:nth-child(4n+4), &:not(.small):nth-child(2)
 			background $secondary
 			.item-text
 				background $secondary
 				color $primary
+			&.news
+				.item-text
+					color $accent
 		&.news
 			.item-text
-				background $secondary
 				color $accent
+
+#close
+	position fixed
+	top 4.5rem
+	right 0
+	z-index 4
+	a
+		background $accent
+		color $secondary
+		// font-size 2.3rem
+		width 4.5rem
+		height 4.5rem
+		border-radius 100%
+		display inline-flex
+		justify-content center
+		align-items center
+		&:hover
+			color $accent
+			background $secondary
 
 #page-content.post
 	position relative
 	background $primary
+	#share-buttons
+		position fixed
+		top 9rem
+		right 0
+		height calc(100vh - 9rem)
+		display inline-flex
+		flex-direction column
+		justify-content space-between
+		li a
+			background $secondary
+			color $primary
+			font-size 2.3rem
+			width 4.5rem
+			height 4.5rem
+			border-radius 100%
+			display inline-flex
+			justify-content center
+			align-items center
+			&:hover
+				color $secondary
+				background $accent
 	.post-cover
 		position fixed
 		z-index 1000
@@ -75,7 +119,7 @@
 			&:nth-child(even)
 				object-position top right
 	#post-content
-		padding 2rem
+		padding 2rem 5rem
 		padding-bottom 100vh
 		span(1/2, $offset: 1/2)
 		&::before

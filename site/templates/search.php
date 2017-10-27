@@ -2,14 +2,14 @@
 
 <div id="page-content" class="medias">
 
-	<?php if (param("tag")): ?>
-	<div class="row center">
-		<span class="button rounded">
-			<?= param("tag") ?>
-		</span>
+	<form id="search" action="<?= page("search")->url() ?>">
+	<input type="search" placeholder="search" name="q" value="<?php if(isset($query)) echo esc($query) ?>" autocomplete="off" />
+	<!-- <input type="submit" value="Search"> -->
+	</form>
+	<div id="close">
+		<a href="<?= $site->url() ?>" data-target="back">X</a>
 	</div>
-	<?php endif ?>
-
+<?php if ($results && $results->count() > 0): ?>
 	<div id="medias">
 		<?php foreach ($results as $key => $media): ?>
 			<?php if ($media->type() == 'image'): ?>
@@ -27,6 +27,18 @@
 			<?php endif ?>
 		<?php endforeach ?>
 	</div>
+<?php else: ?>
+<div id="medias">
+	<?php if ($results && $results->count() < 1): ?>
+		<div class="row center">
+			<span class="button rounded">
+				Nothing found
+			</span>
+		</div>
+	<?php endif ?>
+	<?php snippet('search') ?>
+</div>
+<?php endif ?>
 
 
 </div>

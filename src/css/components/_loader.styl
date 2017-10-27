@@ -8,4 +8,11 @@
 	z-index 10000
 	.button
 		align()
-		font-size 9vw
+		font-size 11vw
+
+.loader.animate
+	transition transform 800ms 200ms $kinetic
+	transform translateY(-100vh) translateZ(0)
+	.button
+		transition transform 600ms $kinetic
+		transform translate(-50%,-110vh) translateZ(0)

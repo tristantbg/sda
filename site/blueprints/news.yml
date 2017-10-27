@@ -1,11 +1,23 @@
 title: News
 files: true
 pages: false
-icon: user
+icon: newspaper-o
 files:
   fields:
-    tags:
-      label: Tags
+    themes:
+      label: Themes
+      type: tags
+      separator: ,
+    technics:
+      label: Technics
+      type: tags
+      separator: ,
+    materials:
+      label: Materials
+      type: tags
+      separator: ,
+    colors:
+      label: Colors
       type: tags
       separator: ,
 fields:

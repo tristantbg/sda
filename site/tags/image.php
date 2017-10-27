@@ -91,16 +91,29 @@ kirbytext::$tags['image'] = array(
       $figure->addClass($tag->attr('class'));
       $figure->append($image);
       $tags = '';
-      foreach ($file->tags()->split(',') as $key => $tag) {
-        if($key == 0) {
-          $tags .= "<a href='".site()->language()->url().'/medias/tag:'.urlencode($tag)."' data-target>".$tag."</a>";
-        }
-        else {
-          $tags .= " + <a href='".site()->language()->url().'/medias/tag:'.urlencode($tag)."' data-target>".$tag."</a>";
-        }
+      // foreach ($file->tags()->split(',') as $key => $tag) {
+      //   if($key == 0) {
+      //     $tags .= "<a href='".site()->language()->url().'/medias/tag:'.urlencode($tag)."' data-target>".$tag."</a>";
+      //   }
+      //   else {
+      //     $tags .= " + <a href='".site()->language()->url().'/medias/tag:'.urlencode($tag)."' data-target>".$tag."</a>";
+      //   }
+      // }
+      foreach ($file->themes()->split(',') as $key => $tag) {
+        $tags .= "<a class='button rounded' href='".site()->language()->url().'/medias/tag:'.urlencode($tag)."' data-target>".$tag."</a>";
+      }
+      foreach ($file->technics()->split(',') as $key => $tag) {
+        $tags .= "<a class='button rounded' href='".site()->language()->url().'/medias/tag:'.urlencode($tag)."' data-target>".$tag."</a>";
+      }
+      foreach ($file->materials()->split(',') as $key => $tag) {
+        $tags .= "<a class='button rounded' href='".site()->language()->url().'/medias/tag:'.urlencode($tag)."' data-target>".$tag."</a>";
+      }
+      foreach ($file->colors()->split(',') as $key => $tag) {
+        $tags .= "<a class='button rounded' href='".site()->language()->url().'/medias/tag:'.urlencode($tag)."' data-target>".$tag."</a>";
       }
       if($tags != '') {
-        $figure->append('<figcaption data-scroll="'.$file->name().'"><span class="button rounded">' . html($tags) . '</span></figcaption>');
+        // $figure->append('<figcaption data-scroll="'.$file->name().'"><span class="button rounded">' . html($tags) . '</span></figcaption>');
+        $figure->append('<figcaption data-scroll="'.$file->name().'">' . html($tags) . '</figcaption>');
       }
       else if(!empty($caption)) {
         $figure->append('<figcaption data-scroll="'.$file->name().'"><span class="button rounded">' . html($caption) . '</span></figcaption>');

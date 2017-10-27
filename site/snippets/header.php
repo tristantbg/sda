@@ -82,7 +82,6 @@
 </div>
 
 <div id="main">
-
 	<header>
 		<div id="menu-burger">
 			<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -102,6 +101,7 @@
 		<div id="nav-language-placeholder"></div>
 
 	</header>
+
 	
 	<nav class="languages" role="navigation">
 	  <ul>
@@ -124,8 +124,10 @@
 	      </a>
 	    </li>
 	    <?php endforeach ?>
-	    <li class="more"><span class="more button black">More</span></li>
+	    <li class="more"><span class="more button black"><a href="<?= page('search')->url() ?>" data-target>More</a></span></li>
 	  </ul>
 	</nav>
+
+	<?php //snippet('search') ?>
 
 	<div id="container">

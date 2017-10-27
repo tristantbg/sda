@@ -28,7 +28,10 @@ $(function() {
                 });
                 $(window).load(function() {
                     $(".loader").click(function(event) {
-                        $(this).hide();
+                        $(this).addClass('animate');
+                        setTimeout(function() {
+                          $(".loader").remove();
+                        }, 2000);
                     });
                 });
             });
@@ -47,14 +50,38 @@ $(function() {
         interact: function() {
             app.loadSlider();
             app.imagesScroll();
+            app.searchBar();
             $("#menu-burger").click(function(event) {
-              $(this).toggleClass('open');
-              $("nav.categories").toggleClass('open');
-            });
+                    if ($(this).hasClass('open')) {
+                        $(this).removeClass('open');
+                        $("nav.categories").removeClass('open');
+                    } else {
+                        $(this).addClass('open');
+                        $("nav.categories").addClass('open');
+                    }
+                });
+        },
+        searchBar: function() {
+            var $form = $('#search');
+            if ($form.length > 0) {
+                var searchUrl = $form.attr('action');
+                $form.keydown(function(event) {
+                    if (event.keyCode == 13) {
+                        event.preventDefault();
+                        return false;
+                    }
+                });
+                $form.find('input').keyup(debounce(function(event) {
+                    doSearch(searchUrl, $(this).val(), "#medias", function() {
+                       
+                    });
+                }, 400));
+            }
         },
         imagesScroll: function() {
             var head = 45 + 34;
             var $cover = $(".post-cover");
+
             function checkTagPosition() {
                 currentScroll = $(window).scrollTop();
                 $cover.hide();
@@ -74,8 +101,8 @@ $(function() {
             if (typeof document.getElementById("post-visuals") !== "undefined") {
                 $postVisuals = $("#post-visuals");
                 $cover.click(function(event) {
-                $(this).hide();
-            });
+                    $(this).hide();
+                });
                 $('figure[data-scroll]').each(function(index, el) {
                     id = el.getAttribute("data-scroll");
                     img = $(el).find("img").css('z-index', 500 - index).attr('data-scroll', id);
@@ -226,7 +253,7 @@ $(function() {
         smoothState: function(container, $target) {
             var options = {
                     debug: true,
-                    scroll: false,
+                    scroll: true,
                     anchors: '[data-target]',
                     loadingClass: false,
                     prefetch: true,
@@ -236,7 +263,7 @@ $(function() {
                         target = $currentTarget.data('target');
                         if (target === "back") app.goBack();
                         $("#menu-burger").removeClass('open');
-              $("nav.categories").removeClass('open');
+                        $("nav.categories").removeClass('open');
                         // console.log(lastTarget);
                     },
                     onBefore: function(request, $container) {
@@ -244,25 +271,25 @@ $(function() {
                         // console.log(popstate);
                     },
                     onStart: {
-                        duration: 300, // Duration of our animation
+                        duration: 200, // Duration of our animation
                         render: function($container) {
                             $body.addClass('is-loading');
                         }
                     },
                     onReady: {
-                        duration: 300,
+                        duration: 0,
                         render: function($container, $newContent) {
                             // Inject the new content
-                            $(window).scrollTop(0);
                             $container.html($newContent);
                         }
                     },
                     onAfter: function($container, $newContent) {
+                        //$(window).scrollTop(0);
                         app.interact();
+                        smoothState.clear();
                         setTimeout(function() {
                             $body.removeClass('is-loading');
                             // Clear cache for random content
-                            // smoothState.clear();
                         }, 300);
                     }
                 },

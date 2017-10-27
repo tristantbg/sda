@@ -8,6 +8,10 @@
 	<?php endif ?>
 	<div id="post-visuals"></div>
 	<div id="post-content">
+		<div id="close">
+			<a href="<?= $page->parent()->url() ?>" data-target="back">X</a>
+		</div>
+		<?php snippet("sharebuttons", array('p' => $page)) ?>
 		<div id="post-header">
 			<h1 class="title"><?= $page->title()->html() ?></h1>
 			<a href="<?= $page->parent()->url() ?>" class="button rounded" data-target>
