@@ -6,6 +6,9 @@ fields:
   title:
     label: Title
     type:  text
+  mobileTitle:
+    label: Mobile title
+    type:  text
   description:
     label: Description
     type:  textarea

@@ -4,13 +4,16 @@ module.exports = function(grunt) {
             plugins: {
                 src: [
                 'site/plugins/embed/assets/js/embed.js',
-                'node_modules/flickity/dist/flickity.pkgd.min.js', 
+                'node_modules/gsap/TweenMax.js', 
+                'node_modules/Marquee3G/Marquee3G.js', 
+                // 'node_modules/flickity/dist/flickity.pkgd.min.js', 
+                // 'node_modules/hls.js/dist/hls.light.js', 
                 //'node_modules/lazysizes/plugins/object-fit/ls.object-fit.min.js', 
-                'node_modules/lazysizes/lazysizes.min.js', 
-                'node_modules/lazysizes/plugins/optimumx/ls.optimumx.min.js', 
+                // 'node_modules/lazysizes/lazysizes.min.js', 
+                // 'node_modules/lazysizes/plugins/optimumx/ls.optimumx.min.js', 
                 //'node_modules/lazysizes/plugins/unveilhooks/ls.unveilhooks.min.js', 
-                //'node_modules/viewport-units-buggyfill/viewport-units-buggyfill.js',
-                'libraries/smoothstate-with-action/src/jquery.smoothState.js'
+                // 'node_modules/viewport-units-buggyfill/viewport-units-buggyfill.js',
+                // 'libraries/smoothstate-with-action/src/jquery.smoothState.js'
                 ],
                 dest: 'assets/js/plugins.concat.js'
             },
@@ -35,6 +38,7 @@ module.exports = function(grunt) {
         stylus: {
             compile: {
                 options: {
+                    'include css': true,
                     use: [
                         require('rupture')
                     ],
@@ -60,27 +64,18 @@ module.exports = function(grunt) {
           }
         },
         watch: {
-            js: {
-                files: ['src/js/components/*.js', 'src/js/app.js'],
-                tasks: ['concat:app', 'uglify:app'],
-                options: {
-                    livereload: true,
-                }
-            },
+            // js: {
+            //     files: ['src/js/components/*.js', 'src/js/app.js'],
+            //     tasks: ['concat:app', 'uglify:app'],
+            //     options: {
+            //         livereload: true,
+            //     }
+            // },
             css: {
                 files: ['src/css/**/*.styl'],
                 tasks: ['stylesheets'],
                 options: {
                     livereload: true,
-                }
-            }
-        },
-        php: {
-            test: {
-                options: {
-                    keepalive: true,
-                    port: 5000,
-                    open: true
                 }
             }
         }
@@ -94,5 +89,5 @@ module.exports = function(grunt) {
     grunt.registerTask('javascript', ['concat', 'uglify']);
     grunt.registerTask('stylesheets', ['stylus', 'cssmin']);
     grunt.registerTask('test', ['php', 'mocha']);
-    grunt.registerTask('default', ['javascript', 'stylesheets', 'watch', 'php']);
+    grunt.registerTask('default', ['stylesheets', 'watch']);
 };

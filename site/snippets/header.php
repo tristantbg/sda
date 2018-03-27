@@ -53,11 +53,8 @@
 
 	<?php 
 	echo css('assets/css/build/build.min.css');
-	echo js('assets/js/vendor/modernizr.min.js');
+	echo js('assets/js/build/vendor/modernizr-bundle.js');
 	?>
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="<?= url('assets/js/vendor/jquery.min.js') ?>">\x3C/script>')</script>
 
 	<?php if(!$site->customcss()->empty()): ?>
 		<style type="text/css">
@@ -68,20 +65,16 @@
 </head>
 <body>
 
-<div id="outdated">
-	<div class="inner">
-	<p class="browserupgrade">You are using an <strong>outdated</strong> browser.
-	<br>Please <a href="http://outdatedbrowser.com" target="_blank">upgrade your browser</a> to improve your experience.</p>
-	</div>
-</div>
-
-<div class="loader">
+<div id="loader">
 	<div class="button black rounded">
 		<?= l::get('hi') ?>
 	</div>
 </div>
 
 <div id="main">
+	
+	<div class="pjax">
+
 	<header>
 		<div id="menu-burger">
 			<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -95,48 +88,24 @@
 		</div>
 
 		<div id="site-title">
-			<a href="<?= $site->language()->url() ?>" data-target><h1><?= $site->title()->html() ?></h1></a>
+			<a href="<?= $site->language()->url() ?>" data-target>
+				<span class="desktop">
+					<?php if ($page->isHomepage()): ?>
+						<h1><?= $site->title()->html() ?></h1>
+					<?php else: ?>
+						<?= $site->title()->html() ?>
+					<?php endif ?>
+				</span>
+				<span class="mobile">
+					<?= $site->mobileTitle()->html() ?>
+				</span>
+			</a>
 		</div>
 
 		<div id="nav-language-placeholder"></div>
 
 	</header>
 
-	
-	<nav class="languages" role="navigation">
-	  <ul>
-	    <?php foreach($site->languages() as $language): ?>
-	    <li<?php e($site->language() == $language, ' class="active"') ?>>
-	      <a href="<?php echo $page->url($language->code()) ?>">
-	        <?php echo html($language->code()) ?>
-	      </a>
-	    </li>
-	    <?php endforeach ?>
-	  </ul>
-	</nav>
-
-	<nav class="categories" role="navigation">
-	  <ul>
-	    <?php foreach($site->homePage()->children()->visible() as $cat): ?>
-	    <li class="button rounded">
-	      <a href="<?php echo $cat->url() ?>" data-target>
-	        <?php echo html($cat->title()) ?>
-	      </a>
-	    </li>
-	    <?php endforeach ?>
-	    <li class="more button black" event-target="additional-menu"><span></span></li>
-	  </ul>
-	</nav>
-	
-	<div id="additional-menu">
-		<form id="search" class="no-ajax" action="<?= page("search")->url() ?>">
-		<input type="search" placeholder="search" name="q" value="<?php if(isset($query)) echo esc($query) ?>" autocomplete="off" />
-		<!-- <input type="submit" value="Search"> -->
-		</form>
-		<div id="close">
-			<a event-target="additional-menu">X</a>
-		</div>
-		<?php snippet('search') ?>
-	</div>
+	<?php snippet('menu') ?>
 
 	<div id="container">

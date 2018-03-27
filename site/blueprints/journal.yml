@@ -1,11 +1,11 @@
-title: Category
-icon: folder-o
+title: Journal
+icon: folder
 files: false
 pages:
   sort: date
   num: date
   template:
-    - post
+    - news
 deletable: false
 fields:
   title:

@@ -1,0 +1,72 @@
+@import('fonts.css')
+
+font-text()
+	font-size 1.7rem
+	
+font-menu()
+	font-size 3.7rem
+	text-transform uppercase
+	letter-spacing -0.02em
+	line-height .85
+	// white-space nowrap
+
+font-heading()
+	text-transform uppercase
+	font-size 5.5rem
+	letter-spacing -0.02em
+
+sans-serif()
+	font-family 'ApaxBold', Helvetica Neue, Arial, sans-serif
+
+serif()
+	font-family 'GenathBold', Times, serif
+	em
+		font-style italic
+
+blog-item-title(style = 'serif')
+	letter-spacing -0.02em
+	font-size 9.5vw
+	if style == 'serif'
+		serif()
+		line-height 0.75
+	else
+		sans-serif()
+		line-height 0.95
+
+body,html
+	width 100%
+	-webkit-text-size-adjust 100%
+	background $secondary
+
+html
+	font-size 10px
+	+above($md + 1)
+		font-size 0.7vw
+
+body
+	sans-serif()
+	font-text()
+	text-rendering optimizeLegibility
+	font-smoothing()
+	line-height 1
+
+#site-title, .post-tag
+	font-menu()
+	white-space nowrap
+
+#post-date, .caption
+	font-size 1rem
+	serif()
+	text-transform uppercase
+	letter-spacing .1em
+
+h1.title
+	font-heading()
+	margin 1rem 0
+
+p
+	margin-bottom 1em
+	line-height 1.2
+
+p:last-child
+	margin-bottom 0

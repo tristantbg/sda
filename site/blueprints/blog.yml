@@ -1,4 +1,5 @@
 title: Blog
+icon: folder
 files: false
 pages:
   template:
@@ -8,7 +9,11 @@ fields:
   title:
     label: Title
     type:  text
-  # categories:
-  #   label: Categories
-  #   type: taglist
-  #   placeholder: Add a category
+  pageindex:
+    label: Posts
+    type: index
+    options: grandchildren
+    columns:
+      title: Title
+      date: Date
+      uid: Slug

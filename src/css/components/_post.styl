@@ -1,0 +1,135 @@
+#close
+	position fixed
+	top $headerHeight
+	right 0
+	z-index 4
+	a
+		background $accent
+		color $secondary
+		// font-size 2.3rem
+		width $headerHeight
+		height $headerHeight
+		border-radius 100%
+		display inline-flex
+		justify-content center
+		align-items center
+		&:hover
+			color $accent
+			background $secondary
+
+#share-buttons
+	position fixed
+	top ($headerHeight*2)
+	right 0
+	height 'calc(100vh - %s)' % ($headerHeight*2)
+	display inline-flex
+	flex-direction column
+	justify-content space-between
+	li a
+		background $primary
+		border 3px solid
+		color $secondary
+		font-size 2.3rem
+		width $headerHeight
+		height $headerHeight
+		border-radius 100%
+		display inline-flex
+		justify-content center
+		align-items center
+		&:hover
+			border-color $accent
+			color $secondary
+			background $accent
+
+[page-type=post]
+	position relative
+	background $primary
+	#post-cover
+		position fixed
+		z-index 501
+		top $headerHeight
+		left 0
+		width 100%
+		height 100vh
+		cursor pointer
+		img
+			width 100%
+			height 100%
+			object-fit contain
+			object-position top right
+			filter: drop-shadow(0 0 0.7rem $secondary)
+	#post-visuals, #post-content
+		min-height 'calc(100vh - %s)' % ($headerHeight)
+		span(1/2)
+	#post-content
+		padding 2rem ($headerHeight+2)
+		padding-bottom 100vh
+		span(1/2, $offset: 1/2)
+		// &::before
+		// 	content ''
+		// 	position fixed
+		// 	top 4.5rem
+		// 	left 50%
+		// 	width 100%
+		// 	height 3.4rem
+		// 	background $primary
+		// 	z-index 3
+		img
+			width 100%
+		figure
+			margin 0
+			img
+				display none
+		figcaption
+			text-align center
+		.post-tag
+			position relative
+			z-index 1
+			margin-top -0.4rem
+			& + .post-tag
+				margin-top 0
+	#post-header
+		text-align center
+		h1
+			margin-bottom 0
+	#post-text
+		serif()
+		p
+			position relative
+			z-index 5
+			margin-top -.3em
+			margin-bottom 0
+		p + p
+			margin-top 1em
+		p:nth-last-child(2)
+			display inline
+			margin-top 0
+			top -0.4rem
+	.end
+		width 1em
+		height 1em
+		display none
+	p + .end
+		display inline-block
+
+#post-visuals
+	position fixed
+	top $headerHeight
+	left 0
+	height 'calc(100vh - %s)' % ($headerHeight)
+	overflow hidden
+	z-index 99
+	img
+		visibility hidden
+		position absolute
+		width 100%
+		height 100%
+		object-fit contain
+		object-position top left
+		filter: drop-shadow(0 0 0.7rem $secondary)
+		&:nth-child(even)
+			object-position top right
+	for i in (0..150)
+		&[image-index=\"{i}\"]
+			img:nth-child({i}), img:nth-child({i}) ~ img
+				visibility visible

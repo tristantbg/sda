@@ -2,7 +2,23 @@
 
 return function ($site, $pages, $page) {
 	$title = $page->title()->html();
-	$medias = site()->index()->files();
+	$posts = $site->index()->visible()->filterBy('intendedTemplate', 'in', ['post', 'news']);
+
+	// Search
+	if ($query = get('q')) {
+		$posts = $posts->search($query, 'title|text|sections|quote|pretitle');
+	}
+
+	// Get all images
+    $medias = new Collection();
+    foreach ($posts as $p) {
+      foreach ($p->sections()->toStructure() as $s) {
+      	if ($s->_fieldset() == "image" && $s->get("first")->toFile()) {
+          $medias->data[] = $s->get("first")->toFile();
+        }
+      }
+    }
+	$medias = $medias->sortBy('sort', 'asc');
 	$results = $medias;
 
 	if ($tag = param('themes')) {
@@ -18,7 +34,7 @@ return function ($site, $pages, $page) {
 		$results = $results->filterBy('colors', $tag, ',');
 	}
 
-	$designers = $site->index()->filterBy('intendedTemplate', 'post')->visible();
+	$designers = $posts->filterBy('intendedTemplate', 'post');
 
 	$themes = [];
 	$technics = [];
@@ -43,6 +59,8 @@ return function ($site, $pages, $page) {
 
 	return array(
 	'title' => $title,
+	'categories' => $site->homePage()->children()->visible(),
+	'query' => $query,
 	'medias' => $medias,
 	'results' => $results,
 	'designers' => $designers,

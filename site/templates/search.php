@@ -1,6 +1,6 @@
 <?php snippet('header') ?>
 
-<div id="page-content" class="medias">
+<div id="page-content" page-type="medias">
 
 	<form id="search" action="<?= page("search")->url() ?>">
 	<input type="search" placeholder="search" name="q" value="<?php if(isset($query)) echo esc($query) ?>" autocomplete="off" />
@@ -36,7 +36,6 @@
 			</span>
 		</div>
 	<?php endif ?>
-	<?php snippet('search') ?>
 </div>
 <?php endif ?>
 

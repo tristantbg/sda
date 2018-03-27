@@ -1,10 +1,20 @@
 <?php
 
 return function ($site, $pages, $page) {
-	$posts = $page->grandChildren()->visible()->sortBy('date', 'desc');
+	$posts = $site->index()->filterBy('intendedTemplate', 'in', ['post', 'news'])->visible()->sortBy('date', 'desc');
 
 	$designers = $site->index()->filterBy('intendedTemplate', 'post')->visible();
-	$medias = site()->index()->files();
+	
+	// Get all images
+    $medias = new Collection();
+    foreach ($posts as $p) {
+      foreach ($p->sections()->toStructure() as $s) {
+      	if ($s->_fieldset() == "image" && $s->get("first")->toFile()) {
+          $medias->data[] = $s->get("first")->toFile();
+        }
+      }
+    }
+	$medias = $medias->sortBy('sort', 'asc');
 
 	$themes = [];
 	$technics = [];
@@ -28,6 +38,7 @@ return function ($site, $pages, $page) {
 	asort($colors);
 
 	return array(
+	'categories' => $site->homePage()->children()->visible(),
 	'posts' => $posts,
 	'designers' => $designers,
 	'themes' => $themes,

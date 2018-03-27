@@ -1,4 +1,4 @@
-<div id="more">
+<div id="tags-index">
 	<div class="search-elem">
 		<div class="button black rounded">Designer</div>
 		<div class="scroller">
@@ -44,7 +44,7 @@
 		<div class="scroller">
 			<div>
 				<?php foreach ($colors as $key => $tag): ?>
-					<a class="color" href="<?= $site->url().'/medias/colors:'.$tag ?>" style="background: <?= $tag ?>" data-target><?php //html($tag) ?></a>
+					<a class="color" href="<?= $site->url().'/medias/colors:'.$tag ?>" style="background: <?= $tag ?>" data-target></a>
 				<?php endforeach ?>
 			</div>
 		</div>

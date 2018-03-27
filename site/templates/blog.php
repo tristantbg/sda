@@ -1,6 +1,6 @@
 <?php snippet('header') ?>
 
-<div id="page-content" class="blog">
+<div id="page-content" page-type="blog">
 	<?php $idx = 1 ?>
 	<?php foreach ($posts as $key => $post): ?>
 
@@ -17,14 +17,31 @@
 			</a>
 
 			<div class="item-visual">
-				<?php if($featured = $post->featured()->toFile()): ?>
-					<img src="<?= $featured->width(1000)->url() ?>" class="lazy lazyload" width="100%" height="100%">
+				<?php if($post->featuredImages()->isNotEmpty() && $post->featured()->toFile()): ?>
+					<div class="thumbnail-slider">
+						<?php snippet('blog-thumbnail', array('field' => $post->featured())) ?>
+						<?php foreach ($post->featuredImages()->toStructure() as $key => $image): ?>
+							<?php snippet('blog-thumbnail', array('field' => $image)) ?>
+						<?php endforeach ?>
+					</div>
+				<?php elseif($post->featured()->toFile()): ?>
+					<?php snippet('blog-thumbnail', array('field' => $post->featured())) ?>
 				<?php endif ?>
 			</div>
 
-			<div class="item-text serif bold">
-				<?php if($post->intendedTemplate() == "news") echo $post->title()->html() ?>
-				<?php if($post->quote()->isNotEmpty()) echo html("“".$post->quote()."”") ?>
+			<div class="item-text">
+				<?php
+					$postTitle = "";
+
+					if($post->intendedTemplate() == "news") {
+						if ($post->pretitle()->isNotEmpty()) $postTitle .= $post->pretitle()->html().'<br>';
+						$postTitle .= "“".$post->title()->html()."”";
+					} elseif($post->quote()->isNotEmpty()) {
+						$postTitle .= "“".$post->quote()."”";
+					}
+
+					echo $postTitle;
+				?>
 			</div>
 			
 		</div>

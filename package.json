@@ -2,7 +2,18 @@
   "name": "",
   "description": "",
   "private": true,
+  "scripts": {
+    "build": "webpack --config ./webpack.config.js --progress",
+    "start": "webpack --config ./webpack.config.js --watch --watch-poll -d --progress"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.40",
+    "@babel/core": "^7.0.0-beta.40",
+    "@babel/preset-env": "^7.0.0-beta.40",
+    "babel-loader": "^8.0.0-beta",
     "grunt": "*",
     "grunt-contrib-concat": "*",
     "grunt-contrib-cssmin": "^1.0.2",
@@ -11,12 +22,21 @@
     "grunt-contrib-watch": "*",
     "grunt-php": "*",
     "jeet": "*",
-    "rupture": "*"
+    "modernizr-webpack-plugin": "^1.0.6",
+    "rupture": "^0.7.1",
+    "stylus": "^0.54.5",
+    "uglifyjs-webpack-plugin": "^1.1.8",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.11"
   },
   "dependencies": {
-    "flickity": "^2.0.8",
+    "barba.js": "^1.0.0",
+    "flickity": "^2.1.0",
+    "gsap": "^1.20.4",
+    "jquery": "^3.3.1",
     "lazysizes": "^4.0.0-rc3",
+    "lodash.throttle": "^4.1.1",
     "normalize.css": "^7.0.0",
-    "smoothstate": "^0.7.2"
+    "viewport-units-buggyfill": "^0.6.2"
   }
 }

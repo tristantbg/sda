@@ -20,10 +20,26 @@ files:
       label: Colors
       type: tags
       separator: ,
+      help: Choose color names from http://www.colors.commutercreative.com/grid
+    date:
+      label: Date
+      type: date
+      default: today
+      required: true
+    time:
+      label: Time
+      type: time
+      default: now
+      interval: 1
+      required: true
+  sortable: true
 fields:
   previewfiles:
     type: previewfiles
   prevnext: prevnext
+  tab1:
+    label: General
+    type:  tabs
   title:
     label: Title
     type:  text
@@ -31,22 +47,13 @@ fields:
   date:
     label: Post date
     type: datetime
+    required: true
     date:
       format: DD-MM-YYYY
     default:
       date: now
       time: now
     width: 1/2
-  # category:
-  #   label: Category
-  #   type: quickselect
-  #   required: true
-  #   options: field
-  #   field:
-  #     page: ../
-  #     name: categories
-  #     separator: ,
-  #   width: 1/2
   quote:
     label: Quote
     type: text
@@ -59,9 +66,39 @@ fields:
     label: Post cover
     type: image
     width: 1/4
+  featuredImages:
+    label: Thumbnail images
+    type: images
+    limit: 3
   text:
-    label: Description
+    label: Description (for SEO)
     type: textarea
+  tab2:
+    label: Content
+    type:  tabs
+  sections:
+    type: engineer
+    fieldsets:
+      text:
+        label: Text
+        fields:
+          first:
+            label: Text
+            type: textarea
+      image:
+        label: Image
+        fields:
+          first:
+            type: hero
+      # embed:
+      #   label: Embed
+      #   fields:
+      #     first:
+      #       label: URL
+      #       type: url
+      #     second:
+      #       label: Caption
+      #       type: textarea
   # medias: 
   #   label: Images
   #   type: images
