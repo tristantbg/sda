@@ -1,9 +1,9 @@
 <?php
 
 return function ($site, $pages, $page) {
-	$posts = $site->index()->filterBy('intendedTemplate', 'in', ['post', 'news'])->visible()->sortBy('date', 'desc');
+	$posts = $site->index()->visible()->filterBy('intendedTemplate', 'in', ['post', 'news'])->sortBy('date', 'desc');
 
-	$designers = $site->index()->filterBy('intendedTemplate', 'post')->visible();
+	$designers = $site->index()->filterBy('intendedTemplate', 'post')->visible()->sortBy('title');
 	
 	// Get all images
     $medias = new Collection();

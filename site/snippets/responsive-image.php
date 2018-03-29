@@ -16,7 +16,12 @@
 	<?php if (isset($caption) && $caption): ?>
 	alt="<?= $caption.' - © '.$site->title()->html() ?>" 
 	<?php elseif ($image->caption()->isNotEmpty()): ?>
-	alt="<?= $image->caption().' - © '.$site->title()->html() ?>" 
+	alt="<?= $image->caption()->escape().' - © '.$site->title()->html() ?>" 
+	<?php else: ?>
+	alt="<?= $image->page()->title()->html().' - © '.$site->title()->html() ?>" 
+	<?php endif ?>
+	<?php if ($image->credits()->isNotEmpty()): ?>
+	data-credits="<?= $image->credits()->kt()->escape() ?>" 
 	<?php endif ?>
 	width="100%" height="auto" />
 	<noscript>
@@ -24,7 +29,7 @@
 		<?php if (isset($caption) && $caption): ?>
 		alt="<?= $caption.' - © '.$site->title()->html() ?>" 
 		<?php elseif ($image->caption()->isNotEmpty()): ?>
-		alt="<?= $image->caption().' - © '.$site->title()->html() ?>" 
+		alt="<?= $image->caption()->escape().' - © '.$site->title()->html() ?>" 
 		<?php endif ?>
 		width="100%" height="auto" />
 	</noscript>

@@ -1,4 +1,6 @@
-[page-type=blog]
+[page-type=blog], [page-type=journal], [page-type=category]
+	#page-content
+		background $secondary
 	.post-item
 		position relative
 		span(1)
@@ -12,6 +14,7 @@
 				stack()
 				position absolute
 		.item-visual
+			z-index 1
 			img
 				object-fit cover
 			.thumbnail-slider
@@ -24,14 +27,22 @@
 					visibility hidden
 					&.is-selected
 						visibility visible
+					+below($md)
+						visibility visible
+						&:not(:first-child)
+							display none
 		.item-text
 			display flex
 			justify-content center
 			align-items center
 			text-align center
+			overflow hidden
 			padding 3rem
-			background $primary
 			blog-item-title('serif')
+			z-index 2
+			background $primary
+			+below($md)
+				padding 1rem
 		.link-overlay
 			display flex
 			justify-content center
@@ -41,19 +52,40 @@
 			position absolute
 			top 0
 			left 0
-			z-index 1
-		&.small:nth-child(4n+2), &.small:nth-child(4n+3), &:not(.small):nth-child(2)
-			background $secondary
-			.item-text
+			z-index 3
+		+above($md + 1)
+			&.small:nth-child(4n+2), &.small:nth-child(4n+3), &:not(.small):nth-child(2)
 				background $secondary
-				color $primary
-			&.news
 				.item-text
-					color $accent
+					color $primary
+					background $secondary
+				&.news
+					.item-text
+						color $accent
+		+below($md)
+			&:nth-child(even):not(.news)
+				background $secondary
+				.item-text
+					color $primary
+					background $secondary
+					animation-direction reverse
+			&:nth-child(odd):not(.news)
+				background $primary
+				.item-text
+					color $secondary
+					background $primary
+			&:not(.news)
+				.item-text
+					animation blink 4s linear infinite
 		&.news
 			.item-text
 				color $accent
 				blog-item-title('sans-serif')
+				+below($md)
+					background transparent
+			.button
+				+below($md)
+					display none
 		+above($md + 1)
 			&.small
 				span(1/2)

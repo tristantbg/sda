@@ -1,0 +1,26 @@
+title: Info
+pages: false
+files: false
+deletable: false
+options:
+  url: false
+fields:
+  title:
+    label: Title
+    type:  text
+  text:
+    label: Text
+    type:  textarea
+  socials:
+    label: Socials
+    type: structure
+    style: table
+    fields:
+      title:
+        label: Title
+        type: text
+        required: true
+      url:
+        label: URL
+        type: url
+        required: true

@@ -1,0 +1,26 @@
+#share-buttons
+	position fixed
+	top 'calc(%s * 2)' % ($headerHeight)
+	right 0
+	height 'calc(100vh - %s * 2)' % ($headerHeight)
+	display inline-flex
+	flex-direction column
+	justify-content space-between
+	li a
+		background $primary
+		border 0.3rem solid
+		color $secondary
+		font-cta()
+		text-transform uppercase
+		width $headerHeight
+		height $headerHeight
+		border-radius 100%
+		display flex
+		justify-content center
+		align-items center
+		+below($md)
+			border 0.2rem solid
+		&:hover
+			border-color $accent
+			color $secondary
+			background $accent

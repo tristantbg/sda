@@ -1,0 +1,101 @@
+#medias
+	span(1)
+	min-height 'calc(100vh - %s * 2)' % ($headerHeight)
+	.media
+		span(1/4)
+		position relative
+		&:nth-child(even)
+			background $accent
+		&:nth-child(odd)
+			background $secondary
+		.link-overlay
+			display flex
+			flex-direction column
+			justify-content center
+			align-items center
+			width 100%
+			height 100%
+			position absolute
+			top 0
+			left 0
+			z-index 2
+			span
+				opacity 0
+			// span
+			// 	transition transform 80ms ease
+			// 	transform scale(0)
+			// &:hover
+			// 	span
+			// 		transform scale(1)
+		&:hover
+			.link-overlay
+				span
+					opacity 1
+		img
+			display block
+			position relative
+			object-fit cover
+			z-index 1
+			&.lazy:not(.lazyloaded) + a
+				display none
+#results-bar
+	display flex
+	justify-content flex-start
+	width 100%
+	position sticky
+	position -webkit-sticky
+	top $headerHeight
+	height $headerHeight
+	overflow hidden
+	z-index 10
+	.black
+		flex 0 0 auto
+	[data-filter]
+		visibility hidden
+		position relative
+		flex 0 0 11em
+		span
+			align()
+			width 100%
+		&.active
+			display block
+		&.active 
+			&~ #clear-filters
+				display flex
+				margin-left auto
+			&~ #toggle-filters
+				display none
+	// &:not(.show-filters)
+	// 	[data-filters], [data-filter]:not(.active)
+	// 		display none
+	#toggle-filters, #clear-filters
+		font-cta()
+		cursor pointer
+		background $accent
+		color $secondary
+		width $headerHeight
+		height $headerHeight
+		border-radius 100%
+		display flex
+		justify-content center
+		align-items center
+		&:hover
+			color $accent
+			background $secondary
+	#toggle-filters
+		margin-left auto
+		&::before
+			content '+'
+	#clear-filters
+		display none
+		&::before
+			content 'X'
+	&.show-filters
+		#clear-filters
+			display flex
+			margin-left auto
+		#toggle-filters
+			display none
+	&:not(.show-filters)
+		[data-filter]:not(.active)
+			display none

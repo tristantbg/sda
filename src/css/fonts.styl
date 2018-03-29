@@ -1,37 +1,70 @@
 @import('fonts.css')
+webfont('GenathRegular', 'GenathRegular')
+webfont('GenathRegularIta', 'GenathRegularIta')
 
 font-text()
 	font-size 1.7rem
+	+below($md)
+		font-size 1.35rem
 	
 font-menu()
 	font-size 3.7rem
 	text-transform uppercase
 	letter-spacing -0.02em
 	line-height .85
+	+below($md)
+		font-size 2.6rem
 	// white-space nowrap
 
 font-heading()
 	text-transform uppercase
-	font-size 5.5rem
+	font-size 6.6rem
 	letter-spacing -0.02em
+	line-height .85
+	+below($md)
+		font-size 4rem
+
+font-huge()
+	font-menu()
+	font-size 10vw
+
+font-cta()
+	font-size 1.9rem
+	+below($md)
+		font-size 1.2rem
 
 sans-serif()
 	font-family 'ApaxBold', Helvetica Neue, Arial, sans-serif
 
-serif()
-	font-family 'GenathBold', Times, serif
-	em
-		font-style italic
+// serif()
+// 	font-family 'GenathBold', Times, serif
+// 	em
+// 		font-style italic
+
+serif(weight = 'regular')
+	if weight == 'bold'
+		font-family 'GenathBold', Times, serif
+		em
+			font-style italic
+	else
+		font-family 'GenathRegular', Times, serif
+		em
+			font-family 'GenathRegularIta', Times, serif
 
 blog-item-title(style = 'serif')
 	letter-spacing -0.02em
-	font-size 9.5vw
 	if style == 'serif'
-		serif()
+		serif('bold')
 		line-height 0.75
+		font-size 10vw
+		+below($md)
+			font-size 19vw
 	else
 		sans-serif()
-		line-height 0.95
+		line-height 0.85
+		font-size 9vw
+		+below($md)
+			font-size 16vw
 
 body,html
 	width 100%
@@ -54,7 +87,7 @@ body
 	font-menu()
 	white-space nowrap
 
-#post-date, .caption
+#post-date, .caption, .credits
 	font-size 1rem
 	serif()
 	text-transform uppercase
@@ -70,3 +103,7 @@ p
 
 p:last-child
 	margin-bottom 0
+
+#post-text p
+	+below($md)
+		font-size 1.6rem

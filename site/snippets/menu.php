@@ -14,7 +14,7 @@
 	<nav id="main-categories" role="navigation">
 		<ul>
 			<?php foreach($categories as $cat): ?>
-				<li class="button rounded">
+				<li class="button rounded bump">
 					<a href="<?php echo $cat->url() ?>" data-target>
 						<?php echo html($cat->title()) ?>
 					</a>

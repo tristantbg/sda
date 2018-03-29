@@ -1,11 +1,9 @@
 <section class="section-image">
+<?php if ($file = $data->get("first")->toFile()): ?>
 	<?php
 		$file  = $data->get("first")->toFile();
-		$caption = $file->caption();
 		
-		$image = new Brick('image');
-		$image->attr('src', $file->url());
-		$image->attr('alt', $caption);
+		$image = snippet('responsive-image', array("field" => $data->get("first")), true);
 
 		$figure = new Brick('figure');
 		$figure->attr('data-scroll', $file->name());
@@ -28,11 +26,12 @@
 		// $figure->append('<figcaption data-scroll="'.$file->name().'"><span class="button rounded">' . html($tags) . '</span></figcaption>');
 		$figure->append('<figcaption data-scroll="'.$file->name().'">' . html($tags) . '</figcaption>');
 		}
-		else if(!empty($caption)) {
-		$figure->append('<figcaption data-scroll="'.$file->name().'"><span class="post-tag button rounded bump">' . html($caption) . '</span></figcaption>');
-		} else {
+		else {
 		$figure->append('<figcaption data-scroll="'.$file->name().'"><span class="post-tag button rounded bump">' . $file->name() . '</span></figcaption>');
 		}
 		echo $figure;
 	?>
+<?php else: ?>
+	<span class="post-tag button rounded">Image error</span>
+<?php endif ?>
 </section>

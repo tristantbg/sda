@@ -1,9 +1,9 @@
 <?php
 
 return function ($site, $pages, $page) {
-	$posts = $page->children()->visible()->sortBy('date', 'desc');
+	$posts = $site->index()->visible()->filterBy('intendedTemplate', 'in', ['post', 'news'])->sortBy('date', 'desc');
 
-	$designers = $site->index()->filterBy('intendedTemplate', 'post')->visible();
+	$designers = $site->index()->filterBy('intendedTemplate', 'post')->visible()->sortBy('title');
 	
 	// Get all images
     $medias = new Collection();
@@ -39,7 +39,7 @@ return function ($site, $pages, $page) {
 
 	return array(
 	'categories' => $site->homePage()->children()->visible(),
-	'posts' => $posts,
+	'posts' => $page->children()->visible()->sortBy('date', 'desc'),
 	'designers' => $designers,
 	'themes' => $themes,
 	'technics' => $technics,

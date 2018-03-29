@@ -1,11 +1,11 @@
-button3d(color)
+button3d(color, steps)
 	if color == 'light'
 		$1 = alpha(rgb(255,255,255), 0.5)
 		$2 = alpha(rgb(0,0,0), 0.5)
 	else
 		$1 = alpha(rgb(0,0,0), 0.5)
 		$2 = alpha(rgb(255,255,255), 0.3)
-	$steps = 3px
+	$steps = steps
 	// $value = ''
 	// for $i in 1..$steps
 	// 	$size = (3em/$i)
@@ -29,19 +29,20 @@ button3d(color)
 	cursor pointer
 	z-index 3
 	box-shadow inset 0px 0px 0px 0px transparent
-	transition box-shadow 300ms ease
 	&.rounded
 		border-radius 1.5em
 	&.black-hover:hover, &.black
 		background $secondary
 		color $accent
-	&.bump
-		&:hover
-			transition box-shadow 100ms ease
-			button3d('light')
-		&:active
-			transition box-shadow 100ms ease
-			button3d('dark')
+
+.bump
+	transition box-shadow 300ms ease
+	&:hover
+		transition box-shadow 100ms ease
+		button3d('light', 3px)
+	&:active
+		transition box-shadow 100ms ease
+		button3d('dark', 3px)
 
 .button.post-tag
 	position relative
@@ -51,6 +52,8 @@ button3d(color)
 	margin 0 auto
 	padding 1.4em 1em
 	z-index 1
+	+below($md)
+		width 85%
 	& > *
 		align()
 		width 100%

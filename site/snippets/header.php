@@ -37,13 +37,17 @@
 	<?php endif ?>
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="<?= html($page->url()) ?>" />
-	<?php if($page->content()->name() == "project"): ?>
-		<?php if (!$page->featured()->empty()): ?>
-			<meta property="og:image" content="<?= $page->image($page->featured())->width(1200)->url() ?>"/>
-		<?php endif ?>
+	<?php if($page->featured()->isNotEmpty() && $ogimage = $page->featured()->toFile()): ?>
+		<?php $ogimage = $ogimage->width(1200) ?>
+		<meta property="og:image" content="<?= $ogimage->url() ?>"/>
+		<meta property="og:image:width" content="<?= $ogimage->width() ?>"/>
+		<meta property="og:image:height" content="<?= $ogimage->height() ?>"/>
 	<?php else: ?>
-		<?php if(!$site->ogimage()->empty()): ?>
-			<meta property="og:image" content="<?= $site->ogimage()->toFile()->width(1200)->url() ?>"/>
+		<?php if($site->ogimage()->isNotEmpty() && $ogimage = $site->ogimage()->toFile()): ?>
+			<?php $ogimage = $ogimage->width(1200) ?>
+			<meta property="og:image" content="<?= $ogimage->url() ?>"/>
+			<meta property="og:image:width" content="<?= $ogimage->width() ?>"/>
+			<meta property="og:image:height" content="<?= $ogimage->height() ?>"/>
 		<?php endif ?>
 	<?php endif ?>
 
@@ -63,13 +67,11 @@
 	<?php endif ?>
 
 </head>
-<body>
+<body class="with-intro" page-type="<?= $page->intendedTemplate() ?>">
 
-<div id="loader">
-	<div class="button black rounded">
-		<?= l::get('hi') ?>
-	</div>
-</div>
+<div id="loader"></div>
+
+<?php snippet('intro') ?>
 
 <div id="main">
 	
@@ -77,13 +79,13 @@
 
 	<header>
 		<div id="menu-burger">
-			<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 31 30" enable-background="new 0 0 31 30" xml:space="preserve">
-			<g>
-				<rect x="-0.1" y="0" width="31.1" height="4.2"/>
-				<rect x="-0.1" y="12.9" width="31.1" height="4.2"/>
-				<rect x="-0.1" y="25.8" width="31.1" height="4.2"/>
-			</g>
+				<g>
+					<rect x="-0.1" y="0" width="31.1" height="4.2"/>
+					<rect x="-0.1" y="12.9" width="31.1" height="4.2"/>
+					<rect x="-0.1" y="25.8" width="31.1" height="4.2"/>
+				</g>
 			</svg>
 		</div>
 
@@ -102,10 +104,12 @@
 			</a>
 		</div>
 
-		<div id="nav-language-placeholder"></div>
+		<a id="info-toggle" class="bump<?= e($page->is(page('info')), ' active') ?>" href="<?= page('info')->url() ?>" data-target></a>
 
 	</header>
 
 	<?php snippet('menu') ?>
 
 	<div id="container">
+
+		<div id="page-content" page-type="<?= $page->intendedTemplate() ?>">

@@ -2,7 +2,7 @@
 
 return function ($site, $pages, $page) {
 	$title = $page->title()->html();
-	$posts = $site->index()->visible()->filterBy('intendedTemplate', 'in', ['post', 'news']);
+	$posts = $site->index()->visible()->filterBy('intendedTemplate', 'in', ['post', 'news'])->sortBy('date', 'desc');
 
 	// Search
 	if ($query = get('q')) {
@@ -34,7 +34,7 @@ return function ($site, $pages, $page) {
 		$results = $results->filterBy('colors', $tag, ',');
 	}
 
-	$designers = $posts->filterBy('intendedTemplate', 'post');
+	$designers = $posts->filterBy('intendedTemplate', 'post')->sortBy('title');
 
 	$themes = [];
 	$technics = [];

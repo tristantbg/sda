@@ -2,7 +2,7 @@
 
 </div>
 
-<!-- <footer></footer> -->
+</div>
 
 </div>
 

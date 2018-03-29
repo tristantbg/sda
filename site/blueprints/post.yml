@@ -4,6 +4,9 @@ pages: false
 icon: user
 files:
   fields:
+    credits:
+      label: Credits
+      type: textarea
     themes:
       label: Themes
       type: tags
@@ -90,6 +93,11 @@ fields:
         fields:
           first:
             type: hero
+      embed:
+        label: Embed
+        fields:
+          url:
+            type: url
       # embed:
       #   label: Embed
       #   fields:
