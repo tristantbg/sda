@@ -3,37 +3,19 @@
 return function ($site, $pages, $page) {
 	$title = $page->title()->html();
 	$posts = $site->index()->visible()->filterBy('intendedTemplate', 'in', ['post', 'news'])->sortBy('date', 'desc');
+	$query = get('q');
 
-	// Search
-	if ($query = get('q')) {
-		$posts = $posts->search($query, 'title|text|sections|quote|pretitle');
-	}
-
-	// Get all images
-    $medias = new Collection();
-    foreach ($posts as $p) {
-      foreach ($p->sections()->toStructure() as $s) {
-      	if ($s->_fieldset() == "image" && $s->get("first")->toFile()) {
-          $medias->data[] = $s->get("first")->toFile();
-        }
-      }
-    }
-	$medias = $medias->sortBy('sort', 'asc');
-	$results = $medias;
-
-	if ($tag = param('themes')) {
-		$results = $results->filterBy('themes', $tag, ',');
-	}
-	if ($tag = param('technics')) {
-		$results = $results->filterBy('technics', $tag, ',');
-	}
-	if ($tag = param('materials')) {
-		$results = $results->filterBy('materials', $tag, ',');
-	}
-	if ($tag = param('colors')) {
-		$results = $results->filterBy('colors', $tag, ',');
+	// Get all medias
+	$medias = new Collection();
+	foreach ($posts as $p) {
+		foreach ($p->sections()->toStructure() as $s) {
+			if ($s->_fieldset() == "image" && $s->get("first")->toFile()) {
+				$medias->data[] = $s->get("first")->toFile();
+			}
+		}
 	}
 
+	// Create menu
 	$designers = $posts->filterBy('intendedTemplate', 'post')->sortBy('title');
 
 	$themes = [];
@@ -57,12 +39,41 @@ return function ($site, $pages, $page) {
 	$colors = array_unique($colors);
 	asort($colors);
 
+	// Search
+	if ($query) {
+		$postsFilteredByQuery = $posts->search($query, 'title|text|sections|quote|pretitle');
+
+		// Get all medias filtered
+		$mediasFilteredByQuery = new Collection();
+		foreach ($postsFilteredByQuery as $p) {
+			foreach ($p->sections()->toStructure() as $s) {
+				if ($s->_fieldset() == "image" && $s->get("first")->toFile()) {
+					$mediasFilteredByQuery->data[] = $s->get("first")->toFile();
+				}
+			}
+		}
+		$results = searchMedias($medias, $query, ['themes','technics','materials','colors']);
+
+		// add filtered medias by query
+		foreach ($mediasFilteredByQuery as $key => $m) {
+			$results->data[] = $m;
+		}
+	} else {
+		$results = $medias;
+	}
+
+	if (count(param()) > 0 ) {
+		foreach (param() as $key => $tag) {
+			$results = $results->filterBy($key, $tag, ',');
+		}
+	}
+
 	return array(
 	'title' => $title,
 	'categories' => $site->homePage()->children()->visible(),
 	'query' => $query,
 	'medias' => $medias,
-	'results' => $results,
+	'results' => $results->sortBy('sort', 'asc'),
 	'designers' => $designers,
 	'themes' => $themes,
 	'technics' => $technics,

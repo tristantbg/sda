@@ -67,11 +67,13 @@
 	<?php endif ?>
 
 </head>
-<body class="with-intro" page-type="<?= $page->intendedTemplate() ?>">
+<body class="<?php e($page->isHomepage(), 'with-intro') ?>" page-type="<?= $page->intendedTemplate() ?>">
 
 <div id="loader"></div>
 
-<?php snippet('intro') ?>
+<?php if ($page->isHomepage()): ?>
+	<?php snippet('intro') ?>
+<?php endif ?>
 
 <div id="main">
 	

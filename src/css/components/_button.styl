@@ -19,6 +19,7 @@ button3d(color, steps)
 
 
 .button
+	hideselect()
 	sans-serif()
 	display block
 	text-transform uppercase
@@ -46,13 +47,14 @@ button3d(color, steps)
 			padding-top 100%
 
 .bump
-	transition box-shadow 300ms ease
-	&:hover
-		transition box-shadow 100ms ease
-		button3d('light', 3px)
-	&:active
-		transition box-shadow 100ms ease
-		button3d('dark', 3px)
+	+above($md + 1)
+		transition box-shadow 300ms ease
+		&:hover
+			transition box-shadow 100ms ease
+			button3d('light', 3px)
+		&:active
+			transition box-shadow 100ms ease
+			button3d('dark', 3px)
 
 .button.post-tag
 	position relative
@@ -70,8 +72,8 @@ button3d(color, steps)
 		padding 0 0.5em
 		line-height 0.85
 		white-space normal
-		// overflow-x hidden
-		// text-overflow ellipsis
+		overflow-x hidden
+		text-overflow ellipsis
 
 span.button
 	display inline-block

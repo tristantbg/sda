@@ -50,7 +50,7 @@ img
 // 			filter: blur(0px)
 
 .lazy
-	transition opacity 300ms ease
+	transition opacity 200ms ease
 	opacity 0
 	&.lazyloaded, &.flickity-lazyloaded
 		opacity 1
@@ -62,6 +62,9 @@ img
 .mobile
 	+above($md + 1)
 		display none
+
+.cursor-default
+	cursor default !important
 
 #main
 	span(1)

@@ -20,7 +20,8 @@
 		align-items center
 		+below($md)
 			border 0.2rem solid
-		&:hover
-			border-color $accent
-			color $secondary
-			background $accent
+		+above($md + 1)
+			&:hover
+				border-color $accent
+				color $secondary
+				background $accent

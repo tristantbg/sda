@@ -55,7 +55,13 @@ const config = {
     filename: 'app.min.js'
   },
   plugins: [
-    new UglifyJsPlugin(),
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        output: {
+          comments: false
+        }
+      }
+    }),
     new ModernizrWebpackPlugin(modernizrConfig)
     // new webpack.ProvidePlugin({
     //  $: "jquery",

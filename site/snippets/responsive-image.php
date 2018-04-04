@@ -5,7 +5,7 @@
 	$srcset = $image->width(500)->url() . ' 500w,';
 	for ($i = 1000; $i <= 3000; $i += 1000) $srcset .= $image->width($i)->url() . ' ' . $i . 'w,';
 	?>
-	<img class="lazy<?= e(isset($imagePlaceholder) && $imagePlaceholder, ' image-placeholder') ?> lazyload" 
+	<img class="lazy<?= e(isset($imagePlaceholder) && $imagePlaceholder, ' image-placeholder') ?> lazyload<?= e(isset($class), ' '.$class) ?>" 
 	<?php if (isset($placeholder) && $placeholder): ?>
 	src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" 
 	<?php endif ?>

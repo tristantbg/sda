@@ -41,8 +41,6 @@
 			blog-item-title('serif')
 			z-index 2
 			background $primary
-			+below($md)
-				padding 1rem
 			.item-date
 				blog-item-title('sans-serif')
 			.item-tags
@@ -81,6 +79,18 @@
 			&:not(.news)
 				.item-text
 					animation blink 4s linear infinite
+				.item-date
+					position absolute
+					top 1.5em
+					left 0
+					width 100%
+					padding 0 $headerHeight
+				.item-tags
+					position absolute
+					top 4em
+					left 0
+					width 100%
+					padding 0 $headerHeight
 		&.news
 			.item-text
 				color $accent

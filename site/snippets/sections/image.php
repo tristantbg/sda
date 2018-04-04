@@ -3,7 +3,7 @@
 	<?php
 		$file  = $data->get('first')->toFile();
 		
-		$image = snippet('responsive-image', array("field" => $data->get('first'), 'imagePlaceholder' => true), true);
+		$image = snippet('responsive-image', array("field" => $data->get('first'), 'imagePlaceholder' => true, 'class' => 'lazycontainer'), true);
 
 		$figure = new Brick('figure');
 		$figure->attr('data-scroll', $file->name());
@@ -43,7 +43,7 @@
 			}
 
 			$span = new Brick('span');
-			$span->attr('class', 'post-tag button rounded bump');
+			$span->attr('class', 'post-tag button rounded cursor-default');
 			$span->append('<span>'.$default.'</span>');
 
 			$figcaption->append($span);

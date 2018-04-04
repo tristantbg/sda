@@ -44,9 +44,9 @@
 				// echo $postTitle;
 
 				if (strlen($post->date('F')) > 5) {
-					$dateFormatted = $post->date('d M. Y:');
+					$dateFormatted = $post->date('d M. Y:');
 				} else {
-					$dateFormatted = $post->date('d F Y:');
+					$dateFormatted = $post->date('d F Y:');
 				}
 
 				$date = new Brick('div');
@@ -55,7 +55,7 @@
 				echo $date;
 
 				if($post->intendedTemplate() == "news") {
-					$postTitle = "“".$post->title()->html()."”";
+					$postTitle = $post->title()->html();
 					$itemTitle = new Brick('div');
 					$itemTitle->attr('class', 'item-title');
 					$itemTitle->append($postTitle);

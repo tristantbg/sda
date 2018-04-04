@@ -35,22 +35,23 @@
 			height 100%
 			object-fit contain
 			object-position top right
-			filter: blur(0px) drop-shadow(0 0 0.6rem alpha($secondary, 0.7))
-			&.image-placeholder:not(.lazyloaded)
-				filter: blur(2px) drop-shadow(0 0 0.6rem alpha($secondary, 0.7))
+		&:not(.lazyloaded)
+			background $primary
+			img
+				opacity 0
 	#post-visuals, #post-content
 		min-height 'calc(100vh - %s)' % ($headerHeight)
 		span(1/2)
 		+below($md)
 			stack()
 	#post-content
-		padding '2rem calc(%s + 2rem)' % $headerHeight
+		padding '0 calc(%s + 2rem)' % $headerHeight
 		span(1/2, $offset: 1/2)
 		+above($md + 1)
 			padding-bottom 100vh
 		+below($md)
 			stack()
-			padding 2rem $headerHeight
+			padding 0 $headerHeight 2rem
 		// &::before
 		// 	content ''
 		// 	position fixed
@@ -94,8 +95,13 @@
 		.section-image + .section-image
 			.post-tag
 				margin-top 0
+	#post-date
+		height $headerHeight
+		display flex
+		align-items center
 	#post-header
 		text-align center
+		margin-top -0.45em
 		.post-tag
 			margin-top 0
 		h1
@@ -138,9 +144,10 @@
 			height 100%
 			object-fit contain
 			object-position top left
-			filter: blur(0px) drop-shadow(0 0 0.6rem alpha($secondary, 0.7))
-			&.image-placeholder:not(.lazyloaded)
-				filter: blur(2px) drop-shadow(0 0 0.6rem alpha($secondary, 0.7))
+		&:not(.lazyloaded)
+			background $primary
+			img
+				opacity 0
 		&:nth-child(even)
 			img
 				object-position top right

@@ -9,6 +9,7 @@ import TweenMax from 'gsap';
 import 'gsap/MorphSVGPlugin';
 
 const App = {
+  introTl: null,
   pageType: null,
   body: null,
   width: null,
@@ -29,8 +30,12 @@ const App = {
     App.container = document.getElementById("main");
     App.sizeSet();
     App.pjax();
-    App.intro();
+    App.intro.init();
     App.interact.init();
+    document.addEventListener('lazybeforeunveil', function(e) {
+      if (e.target.classList.contains('lazycontainer'))
+        e.target.parentNode.classList.add('lazyloaded');
+    });
     require('viewport-units-buggyfill').init();
     window.addEventListener('resize', debounce(App.sizeSet, 128), false);
     TweenMax.to('#loader', 0.2, {
@@ -50,48 +55,75 @@ const App = {
       }
     }
   },
-  intro: () => {
-    const intro = document.getElementById('intro');
-    if (intro) {
+  intro: {
+    element: null,
+    init: () => {
+      App.intro.element = document.getElementById('intro');
+      if (App.intro.element) {
+        const timing = 3;
+        App.introTl = new TimelineMax({
+          paused: true,
+          repeat: -1,
+          yoyo: true
+        });
+        App.introTl.to('#h-square', timing, {
+          morphSVG: {
+            shape: '#h-rounded',
+            shapeIndex: 0
+          },
+          ease: Expo.easeInOut
+        }).to('#i-square', timing, {
+          morphSVG: {
+            shape: '#i-rounded',
+            shapeIndex: 0
+          },
+          ease: Expo.easeInOut
+        }, '-=' + timing).to('#qm-square', timing, {
+          morphSVG: {
+            shape: '#qm-rounded',
+            shapeIndex: 0
+          },
+          ease: Expo.easeInOut
+        }, '-=' + timing).to('#p-square', timing, {
+          morphSVG: {
+            shape: '#p-rounded',
+            shapeIndex: 0
+          },
+          ease: Expo.easeInOut
+        }, '-=' + timing);
+        App.introTl.play();
 
-    const introTl = new TimelineMax({
-      paused: true,
-      repeat: -1,
-      yoyo: true
-    });
-    introTl.to('#h-square', 5, {
-      morphSVG: {
-        shape: '#h-rounded',
-        shapeIndex: 0
-      },
-      ease: Expo.easeOut
-    }).to('#i-square', 5, {
-      morphSVG: {
-        shape: '#i-rounded',
-        shapeIndex: 0
-      },
-      ease: Expo.easeOut
-    }, '-=5').to('#qm-square', 5, {
-      morphSVG: {
-        shape: '#qm-rounded',
-        shapeIndex: 0
-      },
-      ease: Expo.easeOut
-    }, '-=5').to('#p-square', 5, {
-      morphSVG: {
-        shape: '#p-rounded',
-        shapeIndex: 0
-      },
-      ease: Expo.easeOut
-    }, '-=5');
-    introTl.play();
-
-    intro.addEventListener('click', () => {
-      intro.parentNode.removeChild(intro);
-      App.body.classList.remove('with-intro');
-      introTl.kill();
-    });
-  }
+        intro.addEventListener('click', () => {
+          App.intro.hide();
+        });
+      }
+    },
+    hide: () => {
+      if (App.intro.element) {
+        if (App.isMobile) {
+          App.intro.destroy();
+          return;
+        }
+        const tl = new TimelineMax({
+          onComplete: App.intro.destroy
+        });
+        tl.staggerTo('#square path', 1, {
+          y: -App.height*1.5,
+          ease: Expo.easeInOut
+        }, 0.15).to(intro, 0.8, {
+          yPercent: -100,
+          ease: Expo.easeInOut
+        }, '-=0.6');
+      }
+    },
+    destroy: () => {
+      if (App.intro.element) {
+        App.body.classList.remove('with-intro');
+        App.intro.element.parentNode.removeChild(App.intro.element);
+        App.introTl.kill();
+        App.intro.element = null;
+      }
+    }
   },
   interact: {
     init: () => {
@@ -202,31 +234,6 @@ const App = {
         checkTagPosition(null, true);
 
       }
-    },
-    intro: () => {
-      const intro = document.getElementById('intro');
-      if (intro && App.body.classList.contains("with-intro")) {
-        TweenMax.fromTo(App.header, 1.6, {
-          autoAlpha: 1,
-          yPercent: -130
-        }, {
-          autoAlpha: 1,
-          yPercent: 0,
-          ease: Power3.easeInOut
-        });
-        intro.addEventListener('click', () => {
-          // intro.style.display = 'none';
-          TweenMax.to(intro, 0.7, {
-            autoAlpha: 0,
-            scale: 1.2,
-            ease: Power3.easeInOut,
-            onComplete: () => {
-              App.body.classList.remove("with-intro");
-            }
-          });
-        });
-      }
-      App.interact.introSlider.init(intro);
     },
     filters: () => {
       let filtersOn = false;
@@ -495,7 +502,8 @@ const App = {
       finish: function() {
         window.scroll(0, 0);
         this.done();
-        App.body.classList.remove('menu-on', 'more-on');
+        App.intro.destroy();
+        App.body.classList.remove('menu-on', 'more-on', 'category-active');
         App.pageType = this.newContainer.querySelector('#page-content').getAttribute('page-type');
         App.body.setAttribute("page-type", App.pageType);
         setTimeout(function() {
