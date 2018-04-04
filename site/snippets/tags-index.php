@@ -1,6 +1,6 @@
 <div id="tags-index">
 	<div class="search-elem">
-		<div class="button black rounded">Designer</div>
+		<div class="search-category button black rounded"><span>Designer 2018</span></div>
 		<div class="scroller">
 			<div>
 				<?php foreach ($designers as $key => $p): ?>
@@ -10,7 +10,7 @@
 		</div>
 	</div>
 	<div class="search-elem">
-		<div class="button black rounded">Theme</div>
+		<div class="search-category button black rounded"><span>Theme</span></div>
 		<div class="scroller">
 			<div>
 				<?php foreach ($themes as $key => $tag): ?>
@@ -20,7 +20,7 @@
 		</div>
 	</div>
 	<div class="search-elem">
-		<div class="button black rounded">Technic</div>
+		<div class="search-category button black rounded"><span>Technic</span></div>
 		<div class="scroller">
 			<div>
 				<?php foreach ($technics as $key => $tag): ?>
@@ -30,7 +30,7 @@
 		</div>
 	</div>
 	<div class="search-elem">
-		<div class="button black rounded">Material</div>
+		<div class="search-category button black rounded"><span>Material</span></div>
 		<div class="scroller">
 			<div>
 				<?php foreach ($materials as $key => $tag): ?>
@@ -40,7 +40,7 @@
 		</div>
 	</div>
 	<div class="search-elem">
-		<div class="button black rounded">Color</div>
+		<div class="search-category button black rounded"><span>Color</span></div>
 		<div class="scroller">
 			<div>
 				<?php foreach ($colors as $key => $tag): ?>

@@ -35,6 +35,15 @@ c::set('autobuster', true);
 c::set('plugin.embed.video.lazyload', true);
 c::set('plugin.embed.video.lazyload.btn', 'assets/images/play.png');
 c::set('kirbytext.image.figure', false);
+c::set('simplemde.replaceTextarea', false);
+c::set('simplemde.kirbytagHighlighting', false);
+c::set('simplemde.buttons', array(
+  "bold",
+  "italic",
+  "link",
+  "pagelink",
+  "email"
+));
 //Typo
 c::set('typography', true);
 c::set('typography.ordinal.suffix', false);
@@ -96,5 +105,11 @@ c::set('languages', array(
 		'name'    => 'Deutsch',
 		'locale'  => 'de_DE',
 		'url'     => '/de',
+	),
+	array(
+		'code'    => 'rm',
+		'name'    => 'Romansh',
+		'locale'  => 'roh',
+		'url'     => '/rm',
 	),
 ));

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="<?= $site->language()->code() ?>" class="no-js">
 <head>
 
 	<meta charset="UTF-8" />
@@ -78,7 +78,7 @@
 	<div class="pjax">
 
 	<header>
-		<div id="menu-burger">
+		<div id="menu-burger" event-target="menu">
 			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 31 30" enable-background="new 0 0 31 30" xml:space="preserve">
 				<g>

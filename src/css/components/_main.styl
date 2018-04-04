@@ -35,12 +35,25 @@ a, a:hover, a:visited, a:focus
 img
 	display block
 
+// .lazy
+// 	&:not(.image-placeholder)
+// 		transition opacity 300ms ease
+// 		opacity 0
+// 		&.lazyloaded, &.flickity-lazyloaded
+// 			opacity 1
+// 	&.image-placeholder
+// 		transition filter 200ms ease
+// 		filter: blur(2px)
+// 		&.lazyloading
+// 			opacity 0
+// 		&.lazyloaded, &.flickity-lazyloaded
+// 			filter: blur(0px)
+
 .lazy
 	transition opacity 300ms ease
 	opacity 0
-
-.lazy.lazyloaded, .lazy.flickity-lazyloaded
-	opacity 1
+	&.lazyloaded, &.flickity-lazyloaded
+		opacity 1
 
 .desktop
 	+below($md)
@@ -64,6 +77,29 @@ img
 	span(1)
 	background $primary
 
-body.is-loading
-	#page-content
+body
+	&::after
+		content ''
+		position fixed
+		top 0
+		left 0
+		width 100%
+		height 100%
+		background $primary
+		transition opacity 200ms ease, visibility 200ms ease
+		z-index 540
+		visibility hidden
 		opacity 0
+	&.is-loading::after
+		opacity 1
+		visibility visible
+
+body
+	+below($sm)
+		+landscape()
+			overflow hidden
+			float left
+			height 100vw
+			width 100vh
+			transform rotate(-90deg) translateX(-100%)
+			transform-origin top left

@@ -6,6 +6,7 @@ import throttle from 'lodash.throttle';
 import debounce from 'lodash.debounce';
 import Barba from 'barba.js';
 import TweenMax from 'gsap';
+import 'gsap/MorphSVGPlugin';
 
 const App = {
   pageType: null,
@@ -28,6 +29,7 @@ const App = {
     App.container = document.getElementById("main");
     App.sizeSet();
     App.pjax();
+    App.intro();
     App.interact.init();
     require('viewport-units-buggyfill').init();
     window.addEventListener('resize', debounce(App.sizeSet, 128), false);
@@ -39,14 +41,57 @@ const App = {
     App.width = window.innerWidth;
     App.height = window.innerHeight;
     App.headerHeight = App.header.offsetHeight;
-    if (App.width <= 770)
+    if (App.width <= 1024)
       App.isMobile = true;
     if (App.isMobile) {
-      if (App.width >= 770) {
-        //location.reload();
+      if (App.width >= 1024) {
+        location.reload();
         App.isMobile = false;
       }
     }
+  },
+  intro: () => {
+    const intro = document.getElementById('intro');
+    if (intro) {
+
+    const introTl = new TimelineMax({
+      paused: true,
+      repeat: -1,
+      yoyo: true
+    });
+    introTl.to('#h-square', 5, {
+      morphSVG: {
+        shape: '#h-rounded',
+        shapeIndex: 0
+      },
+      ease: Expo.easeOut
+    }).to('#i-square', 5, {
+      morphSVG: {
+        shape: '#i-rounded',
+        shapeIndex: 0
+      },
+      ease: Expo.easeOut
+    }, '-=5').to('#qm-square', 5, {
+      morphSVG: {
+        shape: '#qm-rounded',
+        shapeIndex: 0
+      },
+      ease: Expo.easeOut
+    }, '-=5').to('#p-square', 5, {
+      morphSVG: {
+        shape: '#p-rounded',
+        shapeIndex: 0
+      },
+      ease: Expo.easeOut
+    }, '-=5');
+    introTl.play();
+
+    intro.addEventListener('click', () => {
+      intro.parentNode.removeChild(intro);
+      App.body.classList.remove('with-intro');
+      introTl.kill();
+    });
+  }
   },
   interact: {
     init: () => {
@@ -88,7 +133,7 @@ const App = {
       const postVisuals = document.getElementById('post-visuals');
       const figcaptions = document.querySelectorAll('figcaption[data-scroll]');
       const figures = document.querySelectorAll('figure[data-scroll]');
-      
+
       const startScroll = () => {
         postVisuals.classList.add('is-scrolling');
       };
@@ -101,22 +146,27 @@ const App = {
           cover.style.display = 'none';
           coverHidden = true;
         }
-        const currentScroll = window.scrollY;
-        let noTagFound = true;
-        figures.forEach(function(el, index) {
-          const touchTop = App.headerHeight - el.getBoundingClientRect().top;
-          const touchBottom = App.headerHeight - el.getBoundingClientRect().bottom;
-          if (touchTop >= 0) {
-            postVisuals.setAttribute('image-index', (index + 1));
-            if (touchBottom < 0) {
-              postVisuals.classList.add('current-tag');
-              noTagFound = false;
+        if (!App.isMobile) {
+          let noTagFound = true;
+          if (App.headerHeight - figures[0].getBoundingClientRect().top < 0) {
+            postVisuals.setAttribute('image-index', 1);
+            return;
+          }
+          figures.forEach(function(el, index) {
+            const touchTop = App.headerHeight - el.getBoundingClientRect().top;
+            const touchBottom = App.headerHeight - el.getBoundingClientRect().bottom;
+            if (touchTop >= 0) {
+              postVisuals.setAttribute('image-index', (index + 1));
+              if (touchBottom < 0) {
+                postVisuals.classList.add('current-tag');
+                noTagFound = false;
+              }
             }
-          }
-          if (noTagFound) {
-            postVisuals.classList.remove('current-tag');
-          }
-        });
+            if (noTagFound) {
+              postVisuals.classList.remove('current-tag');
+            }
+          });
+        }
       };
       if (postVisuals) {
         if (cover) {
@@ -125,28 +175,30 @@ const App = {
             coverHidden = true;
           });
         }
-        figures.forEach(function(el, index) {
-          const id = el.getAttribute("data-scroll");
-          const img = el.querySelector("img");
+        if (!App.isMobile) {
+          figures.forEach(function(el, index) {
+            const id = el.getAttribute("data-scroll");
+            const img = el.querySelector("img");
 
-          const imgContainer = document.createElement('div');
-          imgContainer.className = 'post-visual';
-          imgContainer.appendChild(img);
-          imgContainer.style.zIndex = 500 - index;
-          imgContainer.setAttribute('data-scroll', id);
+            const imgContainer = document.createElement('div');
+            imgContainer.className = 'post-visual';
+            imgContainer.appendChild(img);
+            imgContainer.style.zIndex = 500 - index;
+            imgContainer.setAttribute('data-scroll', id);
 
-          if (img.getAttribute('data-credits')) {
-            const credits = document.createElement('div');
-            credits.className = 'credits';
-            credits.innerHTML = img.getAttribute('data-credits');
-            imgContainer.appendChild(credits);
-          }
+            if (img.getAttribute('data-credits')) {
+              const credits = document.createElement('div');
+              credits.className = 'credits';
+              credits.innerHTML = img.getAttribute('data-credits');
+              imgContainer.appendChild(credits);
+            }
 
-          postVisuals.appendChild(imgContainer);
-        });
+            postVisuals.appendChild(imgContainer);
+          });
+          window.addEventListener('scroll', throttle(startScroll, 128), false);
+          window.addEventListener('scroll', debounce(stopScroll, 128), false);
+        }
         window.addEventListener('scroll', throttle(checkTagPosition, 128), false);
-        window.addEventListener('scroll', throttle(startScroll, 128), false);
-        window.addEventListener('scroll', debounce(stopScroll, 128), false);
         checkTagPosition(null, true);
 
       }
@@ -269,11 +321,25 @@ const App = {
     },
     menuBurger: () => {
       App.menuOn = false;
-      App.menuBurger = document.getElementById("menu-burger");
-      if (App.menuBurger) {
-        App.menuBurger.addEventListener('click', () => {
+
+      const moreButtons = document.querySelectorAll('[event-target=additional-menu]');
+      moreButtons.forEach((el) => {
+        el.addEventListener('click', () => {
+          App.body.classList.toggle('more-on');
+        });
+      });
+
+      const menuButtons = document.querySelectorAll('[event-target=menu]');
+      menuButtons.forEach((el) => {
+        el.addEventListener('click', () => {
+          if (App.menuOn && App.isMobile) {
+            App.body.classList.remove('menu-on', 'more-on');
+            App.menuOn = false;
+            return;
+          }
           if (!App.menuOn) {
-            TweenMax.staggerFromTo('#main-categories li', 0.8, {
+            const targets = App.isMobile ? '#main-categories li, #close-menu' : '#main-categories li';
+            TweenMax.staggerFromTo(targets, 0.8, {
               y: App.height
             }, {
               y: 0,
@@ -284,13 +350,20 @@ const App = {
           App.body.classList.toggle('menu-on');
           App.menuOn = !App.menuOn;
         });
-        const moreButtons = document.querySelectorAll('[event-target=additional-menu]');
-        moreButtons.forEach((el) => {
-          el.addEventListener('click', () => {
-            App.body.classList.toggle('more-on');
-          });
+      });
+
+      const menuCategories = document.querySelectorAll('.search-category');
+      menuCategories.forEach((el) => {
+        el.addEventListener('click', (e) => {
+          if (el.classList.contains('active')) {
+            el.classList.remove('active');
+            App.body.classList.remove('category-active');
+          } else {
+            el.classList.add('active');
+            App.body.classList.add('category-active');
+          }
         });
-      }
+      });
     }
   },
   linkTargets: () => {
@@ -385,7 +458,7 @@ const App = {
   //   }
   // },
   thumbnailSliders: () => {
-    if(App.width < 1024) return;
+    if (App.width < 1024) return;
     const initFlickity = (element) => {
       let slider = new Flickity(element, {
         cellSelector: 'img',

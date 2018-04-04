@@ -6,7 +6,7 @@
 		span(1)
 		height 50vw
 		+below($md)
-			height 100vw
+			height 100vmin
 		.item-visual, .item-text
 			span(1/2)
 			height 100%
@@ -37,12 +37,16 @@
 			align-items center
 			text-align center
 			overflow hidden
-			padding 3rem
+			padding $headerHeight
 			blog-item-title('serif')
 			z-index 2
 			background $primary
 			+below($md)
 				padding 1rem
+			.item-date
+				blog-item-title('sans-serif')
+			.item-tags
+				font-style italic
 		.link-overlay
 			display flex
 			justify-content center
@@ -90,5 +94,8 @@
 			&.small
 				span(1/2)
 				height 25vw
-				.item-text
-					font-size 4.25vw
+				.item-text, .item-date
+					blog-item-title('sans-serif', true)
+				&:not(.news)
+					.item-tags
+						blog-item-title('serif', true)

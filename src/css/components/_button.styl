@@ -34,6 +34,16 @@ button3d(color, steps)
 	&.black-hover:hover, &.black
 		background $secondary
 		color $accent
+	&.color
+		width $headerHeight
+		padding 0
+		min-width initial
+		border-radius 50%
+		padding 0
+		&::before
+			content ""
+			display block
+			padding-top 100%
 
 .bump
 	transition box-shadow 300ms ease
@@ -60,6 +70,8 @@ button3d(color, steps)
 		padding 0 0.5em
 		line-height 0.85
 		white-space normal
+		// overflow-x hidden
+		// text-overflow ellipsis
 
 span.button
 	display inline-block

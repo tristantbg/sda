@@ -23,6 +23,7 @@
 	background $primary
 	#post-cover
 		position fixed
+		height 'calc(100vh - %s)' % ($headerHeight)
 		z-index 501
 		top $headerHeight
 		left 0
@@ -34,7 +35,9 @@
 			height 100%
 			object-fit contain
 			object-position top right
-			filter: drop-shadow(0 0 0.6rem alpha($secondary, 0.7))
+			filter: blur(0px) drop-shadow(0 0 0.6rem alpha($secondary, 0.7))
+			&.image-placeholder:not(.lazyloaded)
+				filter: blur(2px) drop-shadow(0 0 0.6rem alpha($secondary, 0.7))
 	#post-visuals, #post-content
 		min-height 'calc(100vh - %s)' % ($headerHeight)
 		span(1/2)
@@ -42,8 +45,9 @@
 			stack()
 	#post-content
 		padding '2rem calc(%s + 2rem)' % $headerHeight
-		padding-bottom 100vh
 		span(1/2, $offset: 1/2)
+		+above($md + 1)
+			padding-bottom 100vh
 		+below($md)
 			stack()
 			padding 2rem $headerHeight
@@ -67,11 +71,24 @@
 			text-overflow ellipsis
 			& + .post-tag
 				margin-top 0
+			// &.color
+			// 	width 30%
+			// 	min-width initial
+			// 	border-radius 50%
+			// 	padding 0
+			// 	&::before
+			// 		content ""
+			// 		display block
+			// 		padding-top 100%
 		.section-image
 			figure
 				margin 0
 				img
-					display none
+					+above($md + 1)
+						display none
+					& ~ figcaption .post-tag
+						+below($md)
+							margin-top 0
 			figcaption
 				text-align center
 		.section-image + .section-image
@@ -93,20 +110,15 @@
 		p + p
 			margin-top 1em
 		section:last-child
-			p:nth-last-child(2)
-				display inline
-				margin-top 0
-				top -0.4rem
+			p:last-child
+				&::after
+					content url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgMTUuMzA3IDE1LjMwNyI+CiAgPGRlZnM+CiAgICA8cGF0aCBpZD0iU1ZHSURfMV8iIGQ9Ik0wIDBoMTUuMzA3djE1LjMwN0gweiIvPgogIDwvZGVmcz4KICA8Y2xpcFBhdGggaWQ9IlNWR0lEXzJfIj4KICAgIDx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzFfIiBvdmVyZmxvdz0idmlzaWJsZSIvPgogIDwvY2xpcFBhdGg+CiAgPHBhdGggY2xpcC1wYXRoPSJ1cmwoI1NWR0lEXzJfKSIgZD0iTTcuNjUzIDE1LjMwN2M0LjIyOCAwIDcuNjU0LTMuNDI4IDcuNjU0LTcuNjU1QzE1LjMwOCAzLjQyNyAxMS44ODEgMCA3LjY1MyAwIDMuNDI2IDAgMCAzLjQyNyAwIDcuNjUyYzAgNC4yMjcgMy40MjYgNy42NTUgNy42NTMgNy42NTUiLz4KPC9zdmc+')
+					display inline-block
+					width 0.8em
+					height 0.8em
+					position relative
 		strong
 			box-shadow 0 0.25em 0
-	.end
-		width 0.8em
-		height 0.8em
-		position relative
-		top -0.22em
-		display none
-	p + .end
-		display inline-block
 
 #post-visuals
 	pointer-events none
@@ -126,7 +138,9 @@
 			height 100%
 			object-fit contain
 			object-position top left
-			filter: drop-shadow(0 0 0.6rem alpha($secondary, 0.7))
+			filter: blur(0px) drop-shadow(0 0 0.6rem alpha($secondary, 0.7))
+			&.image-placeholder:not(.lazyloaded)
+				filter: blur(2px) drop-shadow(0 0 0.6rem alpha($secondary, 0.7))
 		&:nth-child(even)
 			img
 				object-position top right

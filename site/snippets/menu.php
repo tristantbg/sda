@@ -2,8 +2,8 @@
 	<ul>
 		<?php foreach($site->languages() as $language): ?>
 			<li<?php e($site->language() == $language, ' class="active"') ?>>
-				<a href="<?php echo $page->url($language->code()) ?>">
-					<?php echo html($language->code()) ?>
+				<a href="<?php echo $page->url($language->code()) ?>" class="no-barba">
+					<?= html($language->code()) ?>
 				</a>
 			</li>
 		<?php endforeach ?>
@@ -30,7 +30,10 @@
 	</form>
 
 	<div id="close-additional-menu" class="close">
-		<a event-target="additional-menu">X</a>
+		<a event-target="menu">X</a>
+	</div>
+	<div id="close-menu" class="close">
+		<a event-target="menu">X</a>
 	</div>
 
 	<?php snippet('tags-index') ?>

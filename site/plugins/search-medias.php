@@ -1,6 +1,6 @@
 <?php
 
-  function search($files, $query, $params = []) {
+  function searchMedias($files, $query, $params = []) {
 
   if(is_string($params)) {
     $params = array('fields' => str::split($params, '|'));

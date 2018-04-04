@@ -6,13 +6,22 @@
 	top $headerHeight
 	left 0
 	z-index 600
-	grid-template-columns 50% auto $headerHeight
-	grid-template-rows '%s calc(100% - %s)' % ($headerHeight $headerHeight)
-	grid-template-areas 'categories search close' 'categories tags tags'
+	+above($md + 1)
+		grid-template-columns 50% auto $headerHeight
+		grid-template-rows '%s auto' % ($headerHeight $headerHeight)
+		grid-template-areas 'categories search close' 'categories tags tags'
+	+below($md)
+		grid-template-columns 50vmin 50vmin
+		grid-template-rows auto 50vmin
+		grid-template-areas 'categories categories' 'more close'
+	*
+		min-width 0
+		min-height 0
 
-#close-additional-menu
+#close-additional-menu, #close-menu
 	display none
 	grid-area close
+	font-cta()
 	a
 		background $accent
 		color $secondary
@@ -23,9 +32,14 @@
 		display inline-flex
 		justify-content center
 		align-items center
-		&:hover
-			color $accent
-			background $secondary
+		+below($md)
+			font-menu()
+			width 100%
+			height 100%
+		+above($md + 1)
+			&:hover
+				color $accent
+				background $secondary
 
 nav#main-categories
 	grid-area categories
@@ -54,9 +68,16 @@ nav#main-categories
 		font-menu()
 		padding 1em 3em
 	li#more-button
+		font-menu()
 		flex-grow 0
 		min-width initial
 		width auto
+		+below($md)
+			position absolute
+			bottom 0
+			left 0
+			width 50vmin
+			height 50vmin
 	[event-target="additional-menu"]
 		span::after
 			content 'More'
@@ -90,28 +111,57 @@ nav#main-categories
 	width 100%
 	grid-area tags
 	display none
-	grid-template-columns 20% 20% 20% 20% 20%
+	+above($md + 1)
+		grid-template-columns 20% 20% 20% 20% 20%
+	+below($md)
+		font-menu()
+		grid-template-columns auto
+		grid-template-rows 20% 20% 20% 20% 20%
 	.scroller
+		+below($md)
+			display none
 		& > div
-			height 'calc(100vh - %s * 2)' % ($headerHeight)
 			overflow-y scroll
+			-webkit-overflow-scrolling touch
+			+above($md + 1)
+				height 'calc(100vh - %s * 3)' % ($headerHeight)
+			+below($md)
+				height 'calc(100vh - %s * 4.75 - 50vmin)' % ($headerHeight)
 			&::-webkit-scrollbar
 				display none
 	.search-elem
 		display flex
 		flex-direction column
 		.button
+			position relative
 			width 100%
 			float left
 			display block
+			border-radius 20em
 			white-space nowrap
 			overflow hidden
 			text-overflow ellipsis
+			+below($md)
+				&.search-category
+					height 100%
+					&.active
+						span
+							display none
+						&::after
+							content 'Back'
+							align()
+						& + .scroller
+							display block
+			span
+				align()
+				width 100%
 		a.color
 			width 100%
 			float left
 			display block
 			border-radius 50%
+			&:last-child
+				margin-bottom 30%
 			&::before
 				content ""
 				display block
@@ -119,7 +169,7 @@ nav#main-categories
 					
 body.menu-on
 	overflow hidden
-	#close-additional-menu
+	#close-menu
 		display block
 	#menu-burger
 		background $secondary
@@ -128,10 +178,24 @@ body.menu-on
 		display grid
 	&.more-on
 		#menu
-			grid-template-columns 37.5% auto $headerHeight
+			+above($md + 1)
+				grid-template-columns 37.5% auto $headerHeight
+			+below($md)
+				grid-template-columns 50vmin 50vmin
+				grid-template-rows '50vmin calc(%s * 2) 1fr' % ($headerHeight)
+				grid-template-areas 'more close' 'search search' 'tags tags'
+		#close-menu
+			display none
+		#close-additional-menu
+			display block
 		nav#main-categories
+			li:not(#more-button)
+				+below($md)
+					display none
 			li#more-button
-				font-menu()
+				+below($md)
+					bottom initial
+					top 0
 			[event-target="additional-menu"]
 				span::after
 					content 'Less'
@@ -139,3 +203,9 @@ body.menu-on
 			display block
 		#tags-index
 			display grid
+	&.category-active
+		#menu
+			.search-category:not(.active)
+				display none
+			#tags-index
+				display block

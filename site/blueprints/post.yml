@@ -4,6 +4,9 @@ pages: false
 icon: user
 files:
   fields:
+    imageName:
+      label: Title
+      type: text
     credits:
       label: Credits
       type: textarea
@@ -57,9 +60,13 @@ fields:
       date: now
       time: now
     width: 1/2
-  quote:
-    label: Quote
-    type: text
+  # quote:
+  #   label: Quote
+  #   type: text
+  #   width: 2/4
+  tags:
+    label: Tags
+    type: tags
     width: 2/4
   featured:
     label: Featured image
@@ -75,7 +82,7 @@ fields:
     limit: 3
   text:
     label: Description (for SEO)
-    type: textarea
+    type: simplemde
   tab2:
     label: Content
     type:  tabs

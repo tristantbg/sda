@@ -3,7 +3,11 @@
 <?php if (param()): ?>
 <div id="results-bar">
 	<?php foreach (param() as $key => $tag): ?>
+		<?php if ($key == "colors"): ?>
+		<span class="button rounded color" style="background-color: <?= $tag ?>"></span>
+		<?php else: ?>
 		<span class="button rounded black"><?= $tag ?></span>
+		<?php endif ?>
 	<?php endforeach ?>
 	<?php foreach ($categories as $key => $cat): ?>
 		<span class="button rounded" data-filter="<?= $cat->uid() ?>"><span><?= $cat->title()->html() ?></span></span>

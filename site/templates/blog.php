@@ -30,18 +30,50 @@
 		</div>
 
 		<div class="item-text">
+			<div>
 			<?php
-				$postTitle = "";
+				// $postTitle = "";
 
-				if($post->intendedTemplate() == "news") {
-					if ($post->pretitle()->isNotEmpty()) $postTitle .= $post->pretitle()->html().'<br>';
-					$postTitle .= "“".$post->title()->html()."”";
-				} elseif($post->quote()->isNotEmpty()) {
-					$postTitle .= "“".$post->quote()."”";
+				// if($post->intendedTemplate() == "news") {
+				// 	if ($post->pretitle()->isNotEmpty()) $postTitle .= $post->pretitle()->html().'<br>';
+				// 	$postTitle .= "“".$post->title()->html()."”";
+				// } elseif($post->quote()->isNotEmpty()) {
+				// 	$postTitle .= "“".$post->quote()."”";
+				// }
+
+				// echo $postTitle;
+
+				if (strlen($post->date('F')) > 5) {
+					$dateFormatted = $post->date('d M. Y:');
+				} else {
+					$dateFormatted = $post->date('d F Y:');
 				}
 
-				echo $postTitle;
+				$date = new Brick('div');
+				$date->attr('class', 'item-date');
+				$date->append($dateFormatted);
+				echo $date;
+
+				if($post->intendedTemplate() == "news") {
+					$postTitle = "“".$post->title()->html()."”";
+					$itemTitle = new Brick('div');
+					$itemTitle->attr('class', 'item-title');
+					$itemTitle->append($postTitle);
+					echo $itemTitle;
+				} else {
+					$itemSub = new Brick('div');
+					$itemSub->attr('class', 'item-tags');
+					if ($post->tags()->isNotEmpty()) {
+						$tags = implode(' +&nbsp;', $post->tags()->split(','));
+						$itemSub->append($tags);
+					} else {
+						// $itemSub->append($post->title());
+					}
+					echo $itemSub;
+				}
+
 			?>
+			</div>
 		</div>
 		
 	</div>

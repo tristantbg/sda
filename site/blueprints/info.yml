@@ -9,8 +9,21 @@ fields:
     label: Title
     type:  text
   text:
-    label: Text
+    label: Text (for SEO)
     type:  textarea
+  links:
+    label: Links
+    type: structure
+    style: table
+    fields:
+      title:
+        label: Title
+        type: text
+        required: true
+      url:
+        label: URL
+        type: url
+        required: true
   socials:
     label: Socials
     type: structure

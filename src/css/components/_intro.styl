@@ -1,0 +1,22 @@
+#intro
+	cursor pointer
+	position fixed
+	width 100%
+	height 'calc(100% - %s)' % ($headerHeight)
+	bottom 0
+	left 0
+	padding 'calc(%s * 1.5) %s' % ($headerHeight $headerHeight)
+	background $secondary
+	z-index 600
+	svg
+		display block
+		height 100%
+		width 100%
+		path
+			fill $accent
+		.hide
+			display none
+
+body.with-intro
+	#site-title, #menu-burger
+		visibility hidden

@@ -4,6 +4,9 @@ pages: false
 icon: newspaper-o
 files:
   fields:
+    imageName:
+      label: Name
+      type: text
     credits:
       label: Credits
       type: textarea
@@ -43,10 +46,14 @@ fields:
   tab1:
     label: General
     type:  tabs
-  pretitle:
-    label: Pre-title
-    type: text
-    width: 2/4
+  # pretitle:
+  #   label: Pre-title
+  #   type: text
+  #   width: 2/4
+  title:
+    label: Title
+    type:  simplemde
+    width: 1/2
   date:
     label: Post date
     required: true
@@ -56,10 +63,6 @@ fields:
     default:
       date: now
       time: now
-    width: 1/2
-  title:
-    label: Title
-    type:  text
     width: 1/2
   featured:
     label: Featured image

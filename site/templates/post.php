@@ -2,10 +2,9 @@
 
 <?php if ($cover = $page->cover()->toFile()): ?>
 	<div id="post-cover">
-		<?php snippet('responsive-image', array('field' => $page->cover(), 'caption' => $page->title()->html())) ?>
+		<?php snippet('responsive-image', array('field' => $page->cover(), 'caption' => $page->title()->html(), 'imagePlaceholder' => true)) ?>
 	</div>
 <?php endif ?>
-<div id="post-visuals" image-index="1"></div>
 <div id="post-content">
 	<div id="close">
 		<a href="<?= $page->parent()->url() ?>" data-target="back">X</a>
@@ -24,11 +23,11 @@
 		<div id="post-sections" class="row">
 			<?php $sections = $page->sections()->toStructure() ?>
 			<?php foreach($sections as $key => $section): ?>
-				<?php $isEnd = $section->_fieldset() == 'text' && $key == $sections->count() - 1 ?>
-				<?php snippet('sections/' . $section->_fieldset(), array('data' => $section, 'isEnd' => $isEnd)) ?>
+				<?php snippet('sections/' . $section->_fieldset(), array('data' => $section)) ?>
 			<?php endforeach ?>
 		</div>
 	</div>
 </div>
+<div id="post-visuals" image-index="1"></div>
 
 <?php snippet('footer') ?>
