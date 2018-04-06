@@ -8,6 +8,9 @@ fields:
   title:
     label: Title
     type:  text
+  infoLink:
+    label: Info Link
+    type: url
   text:
     label: Text (for SEO)
     type:  textarea

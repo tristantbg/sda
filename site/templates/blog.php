@@ -44,10 +44,11 @@
 				// echo $postTitle;
 
 				if (strlen($post->date('F')) > 5) {
-					$dateFormatted = $post->date('d M. Y:');
+					$dateFormatted = $post->date('d M.');
 				} else {
-					$dateFormatted = $post->date('d F Y:');
+					$dateFormatted = $post->date('d F');
 				}
+				$dateFormatted .= '<br>'.$post->date('Y:');
 
 				$date = new Brick('div');
 				$date->attr('class', 'item-date');

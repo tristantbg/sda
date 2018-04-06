@@ -6,7 +6,6 @@ pages:
   num: date
   template:
     - post
-deletable: false
 fields:
   title:
     label: Title

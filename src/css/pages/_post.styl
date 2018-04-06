@@ -35,6 +35,7 @@
 			height 100%
 			object-fit contain
 			object-position top right
+			filter: drop-shadow(0 0 0.6rem alpha($secondary, 0.7))
 		&:not(.lazyloaded)
 			background $primary
 			img
@@ -124,7 +125,7 @@
 					height 0.8em
 					position relative
 		strong
-			box-shadow 0 0.25em 0
+			box-shadow 0 0.20em 0
 
 #post-visuals
 	pointer-events none
@@ -144,6 +145,7 @@
 			height 100%
 			object-fit contain
 			object-position top left
+			filter: drop-shadow(0 0 0.6rem alpha($secondary, 0.7))
 		&:not(.lazyloaded)
 			background $primary
 			img

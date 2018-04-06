@@ -65,7 +65,7 @@ fields:
   #   type: text
   #   width: 2/4
   tags:
-    label: Tags
+    label: Tags (Title)
     type: tags
     width: 2/4
   featured:
@@ -100,11 +100,11 @@ fields:
         fields:
           first:
             type: hero
-      embed:
-        label: Embed
-        fields:
-          url:
-            type: url
+      # embed:
+      #   label: Embed
+      #   fields:
+      #     url:
+      #       type: url
       # embed:
       #   label: Embed
       #   fields:

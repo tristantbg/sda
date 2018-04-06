@@ -65,41 +65,39 @@
 					.item-text
 						color $accent
 		+below($md)
-			&:nth-child(even):not(.news)
-				background $secondary
-				.item-text
-					color $primary
-					background $secondary
-					animation-direction reverse
-			&:nth-child(odd):not(.news)
-				background $primary
-				.item-text
-					color $secondary
-					background $primary
 			&:not(.news)
 				.item-text
 					animation blink 4s linear infinite
-				.item-date
-					position absolute
-					top 1.5em
-					left 0
-					width 100%
-					padding 0 $headerHeight
-				.item-tags
-					position absolute
-					top 4em
-					left 0
-					width 100%
-					padding 0 $headerHeight
+				.item-title
+					animation blink 4s linear infinite reverse
+				&:nth-child(even)
+					background $secondary
+					.item-text
+						color $primary
+						background $secondary
+						animation-direction reverse
+					.item-title
+						animation-direction normal
+				&:nth-child(odd)
+					background $primary
+					.item-text
+						color $secondary
+						background $primary
+			&.news
+				.item-text
+					background $secondary
+					animation blink 4s linear infinite
+				.item-title.button
+					animation blink 4s linear infinite reverse
+				&:nth-child(even)
+					.item-text
+						animation-direction reverse
+					.item-title.button
+						animation-direction normal
 		&.news
 			.item-text
 				color $accent
 				blog-item-title('sans-serif')
-				+below($md)
-					background transparent
-			.button
-				+below($md)
-					display none
 		+above($md + 1)
 			&.small
 				span(1/2)

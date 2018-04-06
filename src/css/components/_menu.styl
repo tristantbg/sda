@@ -100,7 +100,6 @@ nav#main-categories
 		border none
 		-webkit-appearance none
 		+below($sm)
-			font-menu()
 			width 100%
 			margin-left 0
 		&:focus
@@ -144,6 +143,8 @@ nav#main-categories
 			text-overflow ellipsis
 			&.search-category
 				padding 1.5em 1em
+				+above($md + 1)
+					pointer-events none
 			+below($md)
 				&.search-category
 					height 100%

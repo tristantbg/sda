@@ -1,4 +1,4 @@
-<nav class="languages" role="navigation">
+<!-- <nav class="languages" role="navigation">
 	<ul>
 		<?php foreach($site->languages() as $language): ?>
 			<li<?php e($site->language() == $language, ' class="active"') ?>>
@@ -8,7 +8,7 @@
 			</li>
 		<?php endforeach ?>
 	</ul>
-</nav>
+</nav> -->
 
 <div id="menu">
 	<nav id="main-categories" role="navigation">

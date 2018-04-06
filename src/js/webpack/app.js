@@ -21,8 +21,8 @@ const App = {
   categories: null,
   isMobile: null,
   initialize: () => {
-    console.log('Art direction & design', 'www.dualroom.ch');
-    console.log('Website development', 'www.tristanbagot.com');
+    console.log('Concept & design:', 'Emmanuel Crivelli', 'www.dualroom.ch');
+    console.log('Website development:', 'Tristan Bagot', 'www.tristanbagot.com');
     App.body = document.body;
     App.pageType = App.body.getAttribute('page-type');
     App.header = document.querySelector("header");
@@ -93,9 +93,7 @@ const App = {
         }, '-=' + timing);
         App.introTl.play();
 
-        intro.addEventListener('click', () => {
-          App.intro.hide();
-        });
+        App.intro.element.addEventListener('click', App.intro.hide);
       }
     },
     hide: () => {
@@ -108,7 +106,7 @@ const App = {
           onComplete: App.intro.destroy
         });
         tl.staggerTo('#square path', 1, {
-          y: -App.height*1.5,
+          y: -App.height * 1.5,
           ease: Expo.easeInOut
         }, 0.15).to(intro, 0.8, {
           yPercent: -100,
@@ -330,17 +328,22 @@ const App = {
       App.menuOn = false;
 
       const moreButtons = document.querySelectorAll('[event-target=additional-menu]');
+      const menuButtons = document.querySelectorAll('[event-target=menu]');
+      const menuCategories = document.querySelectorAll('.search-category');
+
       moreButtons.forEach((el) => {
         el.addEventListener('click', () => {
           App.body.classList.toggle('more-on');
         });
       });
 
-      const menuButtons = document.querySelectorAll('[event-target=menu]');
       menuButtons.forEach((el) => {
         el.addEventListener('click', () => {
           if (App.menuOn && App.isMobile) {
-            App.body.classList.remove('menu-on', 'more-on');
+            App.body.classList.remove('menu-on', 'more-on', 'category-active');
+            menuCategories.forEach((el) => {
+              el.classList.remove('active');
+            });
             App.menuOn = false;
             return;
           }
@@ -359,7 +362,6 @@ const App = {
         });
       });
 
-      const menuCategories = document.querySelectorAll('.search-category');
       menuCategories.forEach((el) => {
         el.addEventListener('click', (e) => {
           if (el.classList.contains('active')) {

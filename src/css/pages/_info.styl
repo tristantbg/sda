@@ -1,5 +1,7 @@
 #page-content[page-type=info]
 	font-huge()
+	position relative
+	overflow hidden
 	.huge
 		cursor pointer
 	.social
@@ -17,3 +19,12 @@
 			height 100vw
 	.button, .social
 		visibility hidden
+	#credits
+		position absolute
+		z-index 1
+		bottom 0
+		left 0
+		padding 1rem
+		width 50%
+		+below($md)
+			width 100%

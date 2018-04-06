@@ -1,6 +1,6 @@
 <div id="tags-index">
 	<div class="search-elem">
-		<div class="search-category button black rounded"><span>Designer 2018</span></div>
+		<div class="search-category button black rounded"><span>Participants</span></div>
 		<div class="scroller">
 			<div>
 				<?php foreach ($designers as $key => $p): ?>
