@@ -8,6 +8,18 @@ import Barba from 'barba.js';
 import TweenMax from 'gsap';
 import 'gsap/MorphSVGPlugin';
 
+const freezeVp = (e) => {
+  e.preventDefault();
+};
+
+const stopBodyScrolling = (bool) => {
+  if (bool === true) {
+    document.body.addEventListener("touchmove", freezeVp, false);
+  } else {
+    document.body.removeEventListener("touchmove", freezeVp, false);
+  }
+};
+
 const App = {
   introTl: null,
   pageType: null,
@@ -60,6 +72,7 @@ const App = {
     init: () => {
       App.intro.element = document.getElementById('intro');
       if (App.intro.element) {
+        stopBodyScrolling(true);
         const timing = 3;
         App.introTl = new TimelineMax({
           paused: true,
@@ -117,6 +130,7 @@ const App = {
     destroy: () => {
       if (App.intro.element) {
         App.body.classList.remove('with-intro');
+        stopBodyScrolling(false);
         App.intro.element.parentNode.removeChild(App.intro.element);
         App.introTl.kill();
         App.intro.element = null;
