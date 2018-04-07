@@ -6,7 +6,10 @@ import throttle from 'lodash.throttle';
 import debounce from 'lodash.debounce';
 import Barba from 'barba.js';
 import TweenMax from 'gsap';
-import 'gsap/MorphSVGPlugin';
+import '../components/MorphSVGPlugin';
+
+// Fix forEach methods for incompatible browsers
+NodeList.prototype.forEach = Array.prototype.forEach;
 
 const freezeVp = (e) => {
   e.preventDefault();
@@ -62,7 +65,7 @@ const App = {
       App.isMobile = true;
     if (App.isMobile) {
       if (App.width >= 1024) {
-        location.reload();
+        // location.reload();
         App.isMobile = false;
       }
     }

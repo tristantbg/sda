@@ -87,5 +87,8 @@
 		</div>
 	<?php endif ?>
 
+<?php if ($posts->count() == 0): ?>
+	<div class="no-content"><span>No posts yet</span></div>
+<?php endif ?>
 
 <?php snippet('footer') ?>
