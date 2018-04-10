@@ -1,7 +1,7 @@
 <?php
 
 return function ($site, $pages, $page) {
-	$posts = $site->index()->visible()->filterBy('intendedTemplate', 'in', ['post', 'news'])->sortBy('date', 'desc');
+	$posts = $site->index()->visible()->filterBy('intendedTemplate', 'in', ['post', 'news'])->filterBy('date', '<', time())->sortBy('date', 'desc');
 	$designers = $site->index()->filterBy('intendedTemplate', 'post')->visible()->sortBy('title');
 	
 	// Get all images
