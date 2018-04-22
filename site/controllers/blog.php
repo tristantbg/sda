@@ -1,6 +1,7 @@
 <?php
 
 return function ($site, $pages, $page) {
+	date_default_timezone_set("Europe/Zurich");
 	$posts = $site->index()->visible()->filterBy('intendedTemplate', 'in', ['post', 'news'])->filterBy('date', '<', time())->sortBy('date', 'desc');
 
 	$designers = $site->index()->filterBy('intendedTemplate', 'post')->visible()->sortBy('title');
@@ -39,7 +40,7 @@ return function ($site, $pages, $page) {
 
 	return array(
 	'categories' => $site->homePage()->children()->visible(),
-	'posts' => $posts,
+	'posts' => $posts->paginate(9),
 	'designers' => $designers,
 	'themes' => $themes,
 	'technics' => $technics,

@@ -2383,7 +2383,7 @@ esutils@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.2.tgz#0abf4f1caa5bcb1f7a9d8acc6dea4faaa04bac9b"
 
-ev-emitter@^1.0.1, ev-emitter@^1.0.2:
+ev-emitter@^1.0.1, ev-emitter@^1.0.2, ev-emitter@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ev-emitter/-/ev-emitter-1.1.1.tgz#8f18b0ce5c76a5d18017f71c0a795c65b9138f2a"
 
@@ -2604,7 +2604,7 @@ first-chunk-stream@^2.0.0:
   dependencies:
     readable-stream "^2.0.2"
 
-fizzy-ui-utils@^2.0.0:
+fizzy-ui-utils@^2.0.0, fizzy-ui-utils@^2.0.5:
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/fizzy-ui-utils/-/fizzy-ui-utils-2.0.7.tgz#7df45dcc4eb374a08b65d39bb9a4beedf7330505"
   dependencies:
@@ -3272,6 +3272,13 @@ indent-string@^3.0.0:
 indexof@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/indexof/-/indexof-0.0.1.tgz#82dc336d232b9062179d05ab3293a66059fd435d"
+
+infinite-scroll@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/infinite-scroll/-/infinite-scroll-3.0.4.tgz#0d950dbc222b4a1413f9c579c74e92ba66cd996c"
+  dependencies:
+    ev-emitter "^1.1.0"
+    fizzy-ui-utils "^2.0.5"
 
 inflight@^1.0.4:
   version "1.0.6"

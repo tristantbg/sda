@@ -64,7 +64,7 @@ return function ($site, $pages, $page) {
 
 	if (count(param()) > 0 ) {
 		foreach (param() as $key => $tag) {
-			$results = $results->filterBy($key, $tag, ',');
+			if($key != 'page') $results = $results->filterBy($key, $tag, ',');
 		}
 	}
 
@@ -73,7 +73,7 @@ return function ($site, $pages, $page) {
 	'categories' => $site->homePage()->children()->visible(),
 	'query' => $query,
 	'medias' => $medias,
-	'results' => $results->sortBy('sort', 'asc'),
+	'results' => $results->sortBy('sort', 'asc')->paginate(16),
 	'designers' => $designers,
 	'themes' => $themes,
 	'technics' => $technics,

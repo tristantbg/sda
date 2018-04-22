@@ -13,18 +13,22 @@ files:
     themes:
       label: Themes
       type: tags
+      lower: true
       separator: ,
     technics:
       label: Technics
       type: tags
+      lower: true
       separator: ,
     materials:
       label: Materials
       type: tags
+      lower: true
       separator: ,
     colors:
       label: Colors
       type: tags
+      lower: true
       separator: ,
       help: Choose color names from http://www.colors.commutercreative.com/grid
     date:

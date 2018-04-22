@@ -1,23 +1,23 @@
 <?php snippet('header') ?>
 
-<?php if (param()): ?>
-<div id="results-bar">
-	<?php foreach (param() as $key => $tag): ?>
-		<?php if ($key == "colors"): ?>
-		<span class="button rounded color" style="background-color: <?= $tag ?>"></span>
-		<?php else: ?>
-		<span class="button rounded black"><?= $tag ?></span>
-		<?php endif ?>
-	<?php endforeach ?>
-	<?php foreach ($categories as $key => $cat): ?>
-		<span class="button rounded" data-filter="<?= $cat->uid() ?>"><span><?= $cat->title()->html() ?></span></span>
-	<?php endforeach ?>
-		<span id="toggle-filters"></span>
-		<span id="clear-filters"></span>
-</div>
-<?php elseif(isset($query) && $query): ?>
+<?php if(isset($query) && $query): ?>
 	<div id="results-bar">
 		<span class="button rounded black"><?= $query ?></span>
+		<?php foreach ($categories as $key => $cat): ?>
+			<span class="button rounded" data-filter="<?= $cat->uid() ?>"><span><?= $cat->title()->html() ?></span></span>
+		<?php endforeach ?>
+			<span id="toggle-filters"></span>
+			<span id="clear-filters"></span>
+	</div>
+<?php else: ?>
+	<div id="results-bar">
+		<?php foreach (param() as $key => $tag): ?>
+			<?php if ($key == "colors"): ?>
+			<span class="button rounded color" style="background-color: <?= $tag ?>"></span>
+			<?php elseif ($key != "page"): ?>
+			<span class="button rounded black"><?= $tag ?></span>
+			<?php endif ?>
+		<?php endforeach ?>
 		<?php foreach ($categories as $key => $cat): ?>
 			<span class="button rounded" data-filter="<?= $cat->uid() ?>"><span><?= $cat->title()->html() ?></span></span>
 		<?php endforeach ?>
@@ -55,6 +55,21 @@
 				</div>
 			<?php endif ?>
 		<?php endforeach ?>
+		<?php if($results->pagination() && $results->pagination()->hasPages() && $results->pagination()->hasNextPage()): ?>
+		<!-- pagination -->
+		<nav id="pagination">
+
+		<?php if($results->pagination()->hasNextPage()): ?>
+		<a class="next button black rounded" href="<?php echo $results->pagination()->nextPageURL() ?>"><h2>Next</h2></a>
+		<?php endif ?>
+
+		<?php if($results->pagination()->hasPrevPage()): ?>
+		<a class="prev button black rounded" href="<?php echo $results->pagination()->prevPageURL() ?>"><h2>Previous</h2></a>
+		<?php endif ?>
+
+		</nav>
+		<!-- <div class="ajax-loading"><div class="button rounded infinite-scroll-request">Loading</div></div> -->
+		<?php endif ?>
 	<?php else: ?>
 		<div class="row">
 			<span class="button rounded">Nothing found</span>

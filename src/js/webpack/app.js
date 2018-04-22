@@ -2,6 +2,7 @@
 
 import lazysizes from 'lazysizes';
 import Flickity from 'flickity';
+import InfiniteScroll from 'infinite-scroll';
 import throttle from 'lodash.throttle';
 import debounce from 'lodash.debounce';
 import Barba from 'barba.js';
@@ -34,6 +35,7 @@ const App = {
   headerHeight: null,
   menuBurger: null,
   categories: null,
+  infScroll: null,
   isMobile: null,
   initialize: () => {
     console.log('Concept & design:', 'Emmanuel Crivelli', 'www.dualroom.ch');
@@ -140,6 +142,60 @@ const App = {
       }
     }
   },
+  infiniteScroll: () => {
+    const container = document.querySelector('#page-content[page-type=blog] .row');
+    const medias = document.getElementById('medias');
+    const pagination = document.getElementById('pagination');
+
+    if (container && pagination) {
+      App.infScroll = new InfiniteScroll(container, {
+        path: '#pagination .next',
+        append: '.post-item',
+        history: 'replace',
+        hideNav: "#pagination",
+        // status: '.ajax-loading',
+        debug: false
+      });
+      App.infScroll.on('append', function(response, path, items) {
+        for (var i = 0; i < items.length; i++) {
+          items[i].classList.add('small');
+        }
+        App.linkTargets();
+        App.thumbnailSliders();
+      });
+    } else if (medias && pagination) {
+      App.infScroll = new InfiniteScroll(medias, {
+        path: '#pagination .next',
+        append: '.media',
+        history: false,
+        hideNav: "#pagination",
+        // status: '.ajax-loading',
+        debug: false
+      });
+      const filterCategory = (filter) => {
+        const medias = document.getElementsByClassName('media');
+
+        for (var i = 0; i < medias.length; i++) {
+          const el = medias[i];
+          if (el.getAttribute('data-filter') == filter) {
+            el.style.display = 'block';
+          } else {
+            el.style.display = 'none';
+          }
+        }
+      };
+      App.infScroll.on('append', function(response, path, items) {
+        App.linkTargets();
+        const currentFilter = document.querySelector('[data-filter].active');
+        if (currentFilter) {
+          filterCategory(currentFilter.getAttribute('data-filter'));
+        }
+        if (medias.offsetHeight < App.height) App.infScroll.loadNextPage();
+      });
+    } else {
+      App.infScroll = null;
+    }
+  },
   interact: {
     init: () => {
       App.linkTargets();
@@ -148,6 +204,7 @@ const App = {
       App.thumbnailSliders();
       App.interact.imagesScroll();
       App.interact.eventTargets();
+      App.infiniteScroll();
     },
     eventTargets: () => {
       App.interact.menuBurger();
@@ -193,7 +250,7 @@ const App = {
           cover.style.display = 'none';
           coverHidden = true;
         }
-        if (!App.isMobile) {
+        if (!App.isMobile && figures.length > 0) {
           let noTagFound = true;
           if (App.headerHeight - figures[0].getBoundingClientRect().top < 0) {
             postVisuals.setAttribute('image-index', 1);
@@ -271,6 +328,7 @@ const App = {
             el.style.display = 'none';
           }
         }
+        if (App.infScroll) App.infScroll.loadNextPage();
       };
       const hideFilters = () => {
         resultsBar.classList.remove('show-filters');
