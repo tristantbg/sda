@@ -198,13 +198,13 @@ const App = {
   },
   interact: {
     init: () => {
-      App.linkTargets();
       App.embedKirby();
       App.interact.enteringAnimations();
       App.thumbnailSliders();
       App.interact.imagesScroll();
       App.interact.eventTargets();
       App.infiniteScroll();
+      App.linkTargets();
     },
     eventTargets: () => {
       App.interact.menuBurger();
