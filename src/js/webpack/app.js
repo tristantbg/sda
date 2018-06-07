@@ -151,7 +151,7 @@ const App = {
       App.infScroll = new InfiniteScroll(container, {
         path: '#pagination .next',
         append: '.post-item',
-        history: 'replace',
+        history: false,
         hideNav: "#pagination",
         // status: '.ajax-loading',
         debug: false
