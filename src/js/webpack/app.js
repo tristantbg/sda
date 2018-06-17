@@ -594,6 +594,9 @@ const App = {
     };
     Barba.Pjax.Dom.wrapperId = "main";
     Barba.Pjax.Dom.containerClass = "pjax";
+    Barba.Dispatcher.on('transitionCompleted', function() {
+      if (window.ga) window.ga('send', 'pageview')
+    });
     Barba.Pjax.start();
   }
 }
